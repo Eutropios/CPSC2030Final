@@ -3,8 +3,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const loginDiv = document.getElementById("login");
     const accountDiv = document.getElementById("account");
 
-    // Initially hide the account section
+    // Initially hide the account section and log out button
     accountDiv.style.display = "none";
+    document.getElementById("log-out-btn").style.display = "none"
 
     loginForm.addEventListener("submit", function (event) {
         event.preventDefault(); // Prevent form submission
@@ -12,9 +13,11 @@ document.addEventListener("DOMContentLoaded", function () {
         // Get username input
         const username = document.getElementById("username").value;
 
-        // Hide login form and show account section
+        // Hide login form and sign up button and show account section
         loginDiv.style.display = "none";
+        document.getElementById("sign-up-btn").style.display = "none"
         accountDiv.style.display = "block";
+        document.getElementById("log-out-btn").style.display = "block"
 
         // Display user info
         accountDiv.innerHTML = `
@@ -76,7 +79,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Create formatted noteCard
     function createNoteCard(id, content) {
         const card = document.createElement("div");
-        card.classList.add("card", "noteCard", "mb-1");
+        card.classList.add("card", "noteCard", "mt-2");
         card.innerHTML = `
                     <div class="card-header" contenteditable="true">
                         ${id}
@@ -98,4 +101,16 @@ document.addEventListener("DOMContentLoaded", function () {
         //card.querySelector(".btn-outline-danger").addEventListener("click", () => card.remove());
         return card
     }
+
+    document.getElementById("log-out-btn").addEventListener("click", () => {
+        // clear username and password input fields
+        document.getElementById("username").value = ""
+        document.getElementById("password").value = ""
+
+        // hide account relevant elements and show log in and sign up elements
+        loginDiv.style.display = "block";
+        document.getElementById("sign-up-btn").style.display = "block"
+        accountDiv.style.display = "none";
+        document.getElementById("log-out-btn").style.display = "none"
+    })
 });
