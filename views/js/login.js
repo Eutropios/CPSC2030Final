@@ -20,48 +20,49 @@ document.addEventListener("DOMContentLoaded", function () {
         accountDiv.innerHTML = `
             <h3>Welcome, ${username}!</h3>
             <p>Your account details go here.</p>
-            <button type="button" class="btn btn-primary btn-sm">New Note</button>
+            <button type="button" class="btn btn-primary btn-sm" id="newNoteButton">New Note</button>
+            <div id="notesContainer"></div>
         `;
     });
 
-    // Use event delegation to listen for the "New Note" button click
+    // Use event delegation for the "New Note" button
     accountDiv.addEventListener("click", function(event) {
-        if (event.target && event.target.classList.contains("btn-primary")) {
-            if (event.target.innerText === "New Note") {
-                // Create a new card for note input
-                const noteCard = document.createElement('div');
-                noteCard.classList.add('card', 'my-3');
-                noteCard.innerHTML = `
-                    <div class="card-body">
-                        <h5 class="card-title">New Note</h5>
-                        <textarea id="noteInput" class="form-control mb-3" placeholder="Enter your note"></textarea>
-                        <button type="button" class="btn btn-primary" id="submitNote">Submit</button>
-                    </div>
-                `;
+        if (event.target && event.target.id === "newNoteButton") {
+            const noteId = `noteInput-${Date.now()}`; // Generate unique ID
 
-                // Append the card to the account section
-                accountDiv.appendChild(noteCard);
+            // Create a new card for note input
+            const noteCard = document.createElement('div');
+            noteCard.classList.add('card', 'my-3');
+            noteCard.innerHTML = `
+                <div class="card-body">
+                    <h5 class="card-title">New Note</h5>
+                    <textarea id="${noteId}" class="form-control mb-3" placeholder="Enter your note"></textarea>
+                    <button type="button" class="btn btn-primary submit-note" data-note-id="${noteId}">Submit</button>
+                </div>
+            `;
 
-                // Add event listener for submitting the note
-                const submitNoteButton = document.getElementById("submitNote");
-                submitNoteButton.addEventListener("click", function() {
-                    const noteContent = document.getElementById("noteInput").value;
+            // Append the card to the notes container
+            document.getElementById("notesContainer").appendChild(noteCard);
+        }
 
-                    if (noteContent.trim() !== "") {
-                        // Hide the card
-                        noteCard.style.display = "none";
+        // Event delegation for the submit button
+        if (event.target && event.target.classList.contains("submit-note")) {
+            const noteId = event.target.getAttribute("data-note-id");
+            const noteContent = document.getElementById(noteId).value;
 
-                        // Create a new note display
-                        const noteDisplay = document.createElement('div');
-                        noteDisplay.classList.add('alert', 'alert-success', 'my-3');
-                        noteDisplay.innerText = noteContent;
+            if (noteContent.trim() !== "") {
+                // Remove the card
+                event.target.closest(".card").remove();
 
-                        // Append the note below the New Note button
-                        accountDiv.insertBefore(noteDisplay, event.target);
-                    } else {
-                        alert("Please enter a note before submitting.");
-                    }
-                });
+                // Create a new note display
+                const noteDisplay = document.createElement('div');
+                noteDisplay.classList.add('alert', 'alert-success', 'my-3');
+                noteDisplay.innerText = noteContent;
+
+                // Append the note below the New Note button
+                document.getElementById("notesContainer").appendChild(noteDisplay);
+            } else {
+                alert("Please enter a note before submitting.");
             }
         }
     });
