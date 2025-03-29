@@ -77,8 +77,18 @@
                         separated. Login will show by default upon js implementation.
                         <hr>
                         <div id="login">
-                            Login form goes Here
-                        </div>
+                            <form id="loginForm">
+                            <div class="mb-3">
+                                <label for="username" class="form-label">Username</label>
+                                <input type="text" id="username" class="form-control" placeholder="Enter your username" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Password</label>
+                                <input type="password" id="password" class="form-control" placeholder="Enter your password" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Log In</button>
+                            </form>
+                            </div>
                         <hr>
                         <div id="account">
                             Account details goes Here <br>(also buttons for adding cards etc) <br><br>
@@ -100,5 +110,6 @@
 </body>
 <script src="js/cardFunctions.js"></script>
 <script src="js/bootstrap.bundle.min.js"></script>
+<script src="js/login.js"></script>
 
 </html>
