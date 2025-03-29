@@ -9,6 +9,12 @@
     <title>2030 Final Project</title>
 </head>
 
+<style>
+    .card.noteCard {
+        width: 400px
+    }
+</style>
+
 <body>
     <div class="container">
         <header>
@@ -29,8 +35,8 @@
             <div class="col-9">
                 <div class="card text-center bg-warning h6">Welcome Banner</div>
                 <div class="row">
-                    <div class="col" id="left-col">
-                        <div class="card">
+                    <div class="d-flex flex-wrap gap-3">
+                        <div class="card noteCard">
                             <div class="card-header">Test Card 1</div>
                             <div class="card-body">
                                 Currently placeholders, in final version cards won't display before user logs in.
@@ -42,12 +48,10 @@
                                     <button type="button" class="btn btn-outline-primary">Edit</button>
                                     <button type="button" class="btn btn-outline-success">Share</button>
                                     <button type="button" class="btn btn-outline-danger">Delete</button>
-                                  </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col" id="right-col">
-                        <div class="card">
+                        <div class="card noteCard">
                             <div class="card-header">Test Card 2</div>
                             <div class="card-body">
                                 Currently placeholders, in final version cards won't display before user logs in.
@@ -59,7 +63,7 @@
                                     <button type="button" class="btn btn-outline-primary">Edit</button>
                                     <button type="button" class="btn btn-outline-success">Share</button>
                                     <button type="button" class="btn btn-outline-danger">Delete</button>
-                                  </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -69,7 +73,8 @@
                 <div class="card">
                     <div class="card-header bg-info h6">Username or Request to Log-in Here</div>
                     <div class="card-body">
-                        Currently set up for a SPA-like interface. divs for login form and account details are separated. Login will show by default upon js implementation.
+                        Currently set up for a SPA-like interface. divs for login form and account details are
+                        separated. Login will show by default upon js implementation.
                         <hr>
                         <div id="login">
                             Login form goes Here
@@ -81,17 +86,19 @@
                         </div>
                     </div>
                     <div class="card-footer">
-                        
+
                     </div>
                 </div>
             </div>
         </div>
         <hr>
         <footer>
-            <div class="card text-center bg-primary text-light h2">&copy;2025. Noah J., Tanzim R., Gilard V., Trevor W.</div>
+            <div class="card text-center bg-primary text-light h2">&copy;2025. Noah J., Tanzim R., Gilard V., Trevor W.
+            </div>
         </footer>
     </div>
 </body>
 <script src="js/cardFunctions.js"></script>
 <script src="js/bootstrap.bundle.min.js"></script>
+
 </html>
