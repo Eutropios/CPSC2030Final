@@ -55,15 +55,47 @@ document.addEventListener("DOMContentLoaded", function () {
                 event.target.closest(".card").remove();
 
                 // Create a new note display
-                const noteDisplay = document.createElement('div');
-                noteDisplay.classList.add('alert', 'alert-success', 'my-3');
-                noteDisplay.innerText = noteContent;
+                const noteDisplay = createNoteCard(noteId, noteContent)
 
-                // Append the note below the New Note button
-                document.getElementById("notesContainer").appendChild(noteDisplay);
+                // Determine which col to append card to
+                currentCol = (() => {
+                    if (document.getElementById("left-col").childElementCount - document.getElementById("right-col").childElementCount == 0){
+                        return "left-col"
+                    } else {
+                        return "right-col"
+                    }
+                })()
+                // Append noteCard to correct column
+                document.getElementById(currentCol).appendChild(noteDisplay);
             } else {
                 alert("Please enter a note before submitting.");
             }
         }
     });
+
+    // Create formatted noteCard
+    function createNoteCard(id, content) {
+        const card = document.createElement("div");
+        card.classList.add("card", "noteCard", "mb-1");
+        card.innerHTML = `
+                    <div class="card-header" contenteditable="true">
+                        ${id}
+                    </div>
+                    <div class="card-body" contenteditable="true">
+                        ${content}
+                        <hr>
+                        <span class="coords">Location will show here if added by user</span>
+                    </div>
+                    <div class="card-footer">
+                        <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-outline-primary">Edit</button>
+                            <button type="button" class="btn btn-outline-success">Share</button>
+                            <button type="button" class="btn btn-outline-danger">Delete</button>
+                        </div>
+                    </div>
+                    `;
+
+        //card.querySelector(".btn-outline-danger").addEventListener("click", () => card.remove());
+        return card
+    }
 });
