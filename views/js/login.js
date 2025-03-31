@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     loginForm.addEventListener("submit", function (event) {
         event.preventDefault(); // Prevent form submission
-        
+
         // Get username input
         const username = document.getElementById("username").value;
 
