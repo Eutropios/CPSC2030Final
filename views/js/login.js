@@ -1,13 +1,13 @@
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", () => {
     const loginForm = document.getElementById("loginForm");
     const loginDiv = document.getElementById("login");
     const accountDiv = document.getElementById("account");
 
     // Initially hide the account section and log out button
     accountDiv.style.display = "none";
-    document.getElementById("log-out-btn").style.display = "none"
+    document.getElementById("log-out-btn").style.display = "none";
 
-    loginForm.addEventListener("submit", function (event) {
+    loginForm.addEventListener("submit", (event) => {
         event.preventDefault(); // Prevent form submission
 
         // Get username input
@@ -15,9 +15,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Hide login form and sign up button and show account section
         loginDiv.style.display = "none";
-        document.getElementById("sign-up-btn").style.display = "none"
+        document.getElementById("sign-up-btn").style.display = "none";
         accountDiv.style.display = "block";
-        document.getElementById("log-out-btn").style.display = "block"
+        document.getElementById("log-out-btn").style.display = "block";
 
         // Display user info
         accountDiv.innerHTML = `
@@ -29,13 +29,13 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // Use event delegation for the "New Note" button
-    accountDiv.addEventListener("click", function(event) {
+    accountDiv.addEventListener("click", (event) => {
         if (event.target && event.target.id === "newNoteButton") {
             const noteId = `noteInput-${Date.now()}`; // Generate unique ID
 
             // Create a new card for note input
-            const noteCard = document.createElement('div');
-            noteCard.classList.add('card', 'my-3');
+            const noteCard = document.createElement("div");
+            noteCard.classList.add("card", "my-3");
             noteCard.innerHTML = `
                 <div class="card-body">
                     <h5 class="card-title">New Note</h5>
@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         // Event delegation for the submit button
-        if (event.target && event.target.classList.contains("submit-note")) {
+        if (event.target?.classList.contains("submit-note")) {
             const noteId = event.target.getAttribute("data-note-id");
             const noteContent = document.getElementById(noteId).value;
 
@@ -58,16 +58,19 @@ document.addEventListener("DOMContentLoaded", function () {
                 event.target.closest(".card").remove();
 
                 // Create a new note display
-                const noteDisplay = createNoteCard(noteId, noteContent)
+                const noteDisplay = createNoteCard(noteId, noteContent);
 
                 // Determine which col to append card to
-                currentCol = (() => {
-                    if (document.getElementById("left-col").childElementCount - document.getElementById("right-col").childElementCount == 0){
-                        return "left-col"
-                    } else {
-                        return "right-col"
+                const currentCol = (() => {
+                    if (
+                        document.getElementById("left-col").childElementCount -
+                            document.getElementById("right-col").childElementCount ===
+                        0
+                    ) {
+                        return "left-col";
                     }
-                })()
+                    return "right-col";
+                })();
                 // Append noteCard to correct column
                 document.getElementById(currentCol).appendChild(noteDisplay);
             } else {
@@ -99,18 +102,18 @@ document.addEventListener("DOMContentLoaded", function () {
                     `;
 
         //card.querySelector(".btn-outline-danger").addEventListener("click", () => card.remove());
-        return card
+        return card;
     }
 
     document.getElementById("log-out-btn").addEventListener("click", () => {
         // clear username and password input fields
-        document.getElementById("username").value = ""
-        document.getElementById("password").value = ""
+        document.getElementById("username").value = "";
+        document.getElementById("password").value = "";
 
         // hide account relevant elements and show log in and sign up elements
         loginDiv.style.display = "block";
-        document.getElementById("sign-up-btn").style.display = "block"
+        document.getElementById("sign-up-btn").style.display = "block";
         accountDiv.style.display = "none";
-        document.getElementById("log-out-btn").style.display = "none"
-    })
+        document.getElementById("log-out-btn").style.display = "none";
+    });
 });
