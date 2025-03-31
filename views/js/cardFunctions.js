@@ -1,6 +1,5 @@
 (() => {
-
-    document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("DOMContentLoaded", () => {
         const newNote = document.querySelector(".btn-primary.btn-sm");
 
         function createNoteCard() {
@@ -25,7 +24,9 @@
                         </div>
                         `;
 
-            card.querySelector(".btn-outline-danger").addEventListener("click", () => card.remove());
+            card.querySelector(".btn-outline-danger").addEventListener("click", () =>
+                card.remove(),
+            );
 
             cardColumn.appendChild(card);
         }
