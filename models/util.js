@@ -2,7 +2,7 @@
     const mongodb = require("mongodb")
     const MongoClient = mongodb.MongoClient
     let mongodbClient = null
-    const connection = require("./config/config")
+    const connection = require("./config/config.js")
     //-------------------------------------------------------------------------
     /**
      * Connection Strings
@@ -82,6 +82,7 @@
                 console.log("\t|inside connect()")
                 console.log(
                     "\t|Connected successfully to MongoDB!",
+                    // biome-ignore lint/performance/useTopLevelRegex: Not important for us
                     conn.s.url.replace(/:([^:@]{1,})@/, ":****@"),
                 )
                 /**
@@ -89,8 +90,8 @@
                  * Like a database, a collection will be created if it does not exist
                  * The collection will only be created once we insert a document
                  */
-                let collection = client.db().collection("Requests")
-                let log = {
+                const collection = client.db().collection("Requests")
+                const log = {
                     Timestamp: new Date(),
                     Method: req.method,
                     Path: req.url,
@@ -122,5 +123,5 @@
         getMongoClient: getMongoClient,
     }
     const moduleExport = util
-    if (typeof __dirname != "undefined") module.exports = moduleExport
+    if (typeof __dirname !== "undefined") module.exports = moduleExport
 })()

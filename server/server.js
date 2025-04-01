@@ -12,10 +12,10 @@ const server = express()
 /*
   Loading internal modules
 */
-const config = require("./config/config")
+const config = require("./config/config.js")
 const util = require("../models/util.js")
-const homeController = require("../controllers/homeController")
-const memberController = require("../controllers/memberController")
+const homeController = require("../controllers/homeController.js")
+const memberController = require("../controllers/memberController.js")
 
 //----------------------------------------------------------------
 // middleware
