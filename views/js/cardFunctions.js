@@ -1,11 +1,11 @@
-(() => {
+;(() => {
     document.addEventListener("DOMContentLoaded", () => {
-        const newNote = document.querySelector(".btn-primary.btn-sm");
+        const newNote = document.querySelector(".btn-primary.btn-sm")
 
         function createNoteCard() {
-            const cardColumn = document.querySelector(".d-flex.flex-wrap.gap-3");
-            const card = document.createElement("div");
-            card.classList.add("card", "noteCard");
+            const cardColumn = document.querySelector(".d-flex.flex-wrap.gap-3")
+            const card = document.createElement("div")
+            card.classList.add("card", "noteCard")
             card.innerHTML = `
                         <div class="card-header" contenteditable="true">
                             Header Name Here
@@ -22,15 +22,13 @@
                                 <button type="button" class="btn btn-outline-danger">Delete</button>
                             </div>
                         </div>
-                        `;
+                        `
 
-            card.querySelector(".btn-outline-danger").addEventListener("click", () =>
-                card.remove(),
-            );
+            card.querySelector(".btn-outline-danger").addEventListener("click", () => card.remove())
 
-            cardColumn.appendChild(card);
+            cardColumn.appendChild(card)
         }
 
-        newNote.addEventListener("click", createNoteCard);
-    });
-})();
+        newNote.addEventListener("click", createNoteCard)
+    })
+})()
