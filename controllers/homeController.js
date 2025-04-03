@@ -1,6 +1,6 @@
 const util = require("../models/util.js")
-const config = require("../server/config/config")
-const User = require("../models/user")
+const config = require("../server/config/config.js")
+const User = require("../models/user.js")
 const client = util.getMongoClient()
 
 const express = require("express")
