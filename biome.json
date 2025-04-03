@@ -48,12 +48,15 @@
         "enabled": true,
         "rules": {
             "all": true,
+            "correctness": {
+                "noNodejsModules": "off"
+            },
+            "style": {
+                "useNamingConvention": "off"
+            },
             "suspicious": {
                 "noConsole": "off",
                 "noConsoleLog": "off"
-            },
-            "correctness": {
-                "noNodejsModules": "off"
             }
         }
     },
