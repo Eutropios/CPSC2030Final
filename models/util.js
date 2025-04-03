@@ -11,7 +11,7 @@
     //----------------------------------------------------------------
     //let uri =
     const getMongoClient = (local = true) => {
-        let uri = `mongodb+srv://${connection.USERNAME}:${connection.PASSOWRD}@${connection.SERVER}/${connection.DATABASE}?retryWrites=true&w=majority&appName=Test-Cluster`
+        let uri = `mongodb+srv://${connection.USERNAME}:${connection.PASSWORD}@${connection.SERVER}/${connection.DATABASE}?retryWrites=true&w=majority&appName=Test-Cluster`
         if (local) {
             uri = `mongodb://127.0.0.1:27017/${connection.DATABASE}`
         }
@@ -75,7 +75,7 @@
     }
     //-------------------------------------------------------------------------
     const logRequest = async (req, res) => {
-        const client = util.getMongoClient()
+        const client = util.getMongoClient(false)
         client
             .connect()
             .then((conn) => {
@@ -120,7 +120,6 @@
         findOne: findOne,
         insertOne: insertOne,
         insertMany: insertMany,
-        getMongoClient: getMongoClient,
     }
     const moduleExport = util
     if (typeof __dirname !== "undefined") module.exports = moduleExport

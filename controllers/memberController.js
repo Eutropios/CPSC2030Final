@@ -1,7 +1,7 @@
 const util = require("../models/util.js")
 const config = require("../server/config/config.js")
 const Post = require("../models/post.js")
-const client = util.getMongoClient()
+const client = util.getMongoClient(false)
 const express = require("express")
 const memberController = express.Router()
 // Authentication & Authorization Middleware
