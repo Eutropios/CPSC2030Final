@@ -1,12 +1,23 @@
 {
+  "dependencies": {
+    "express": "5.1.0",
+    "mongodb": "6.15.0",
+    "nodemon": "3.1.9"
+  },
+  "description": "Note website",
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
     "@types/express": "5.0.1",
     "@types/node": "22.13.14"
   },
-  "dependencies": {
-    "express": "5.1.0",
-    "mongodb": "6.15.0",
-    "nodemon": "3.1.9"
-  }
+  "keywords": [
+    "notes",
+    "website"
+  ],
+  "main": "server/server.js",
+  "name": "notewebsite",
+  "scripts": {
+    "start": "nodemon server/server.js"
+  },
+  "version": "1.0.0"
 }
