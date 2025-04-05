@@ -19,7 +19,7 @@ homeController.post("/register", util.logRequest, async (req, res, next) => {
     } else {
         const user = User(email, password)
         console.info(user)
-        util.insertOne(collection, user)
+        await util.insertOne(collection, user)
     }
     res.redirect("/member.html")
 })
