@@ -1,20 +1,24 @@
 ;(() => {
     document.addEventListener("DOMContentLoaded", () => {
-        const newNote = document.querySelector(".btn-primary.btn-sm")
+        const newNote = document.querySelector("#addNote")
 
         function createNoteCard() {
-            const cardColumn = document.querySelector(".d-flex.flex-wrap.gap-3")
+            const cardColumn = document.querySelector("#cardContainer")
             const card = document.createElement("div")
-            card.classList.add("card", "noteCard")
+            card.classList.add("card", "noteCard", "mt-2")
             card.innerHTML = `
                         <div class="card-header" contenteditable="true">
                             Header Name Here
                         </div>
-                        <div class="card-body" contenteditable="true">
+                        <div class="card-body">
+                           <p contenteditable="true"> 
                             Body paragraph here
-                            <hr>
-                            <span class="coords">Location will show here if added by user</span>
+                           </p>
+                           <hr>
+                            <span class="text-center coords">Location will show here if added by user</span>
                         </div>
+                        </div>
+                        <div>
                         <div class="card-footer">
                             <div class="btn-group" role="group">
                                 <button type="button" class="btn btn-outline-primary">Edit</button>
