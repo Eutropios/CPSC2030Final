@@ -9,7 +9,6 @@ const path = require("node:path");
 const express = require("express");
 const server = express();
 require("dotenv").config();
-console.log(process.env); // remove this after you've confirmed it is working
 /*
   Loading internal modules
 */

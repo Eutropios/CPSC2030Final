@@ -1,5 +1,5 @@
 (() => {
-    const Post = (topic, message, by) => {
+    const Note = (topic, message, by) => {
         return {
             Topic: topic,
             Message: message,
@@ -7,5 +7,5 @@
             At: new Date().toUTCString(),
         };
     };
-    module.exports = Post;
+    module.exports = Note;
 })();

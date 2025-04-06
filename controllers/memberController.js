@@ -1,9 +1,10 @@
 const util = require("../models/util.js");
 const config = require("../server/config/config.js");
-const Post = require("../models/post.js");
-const client = util.getMongoClient(false);
+const Note = require("../models/note.js");
 const express = require("express");
+const client = util.getMongoClient(false);
 const memberController = express.Router();
+
 // Authentication & Authorization Middleware
 const authenticateUser = (req, res, next) => {
     if (req.user == null) {
@@ -13,6 +14,7 @@ const authenticateUser = (req, res, next) => {
     console.log(req.user);
     next();
 };
+
 const authenticateRole = (role, req, res, next) => {
     return (req, res, next) => {
         if (req.user.role === role) {
@@ -21,46 +23,51 @@ const authenticateRole = (role, req, res, next) => {
         }
     };
 };
+
 memberController.get("/member", authenticateUser, async (req, res, next) => {
     console.info("Inside member.html");
-    const collection = client.db().collection("Posts");
-    const post = Post("Security", "AAA is a key concept in security", "Pentester");
-    util.insertOne(collection, post);
+    const collection = client.db().collection("Notes");
+    const note = Note("Security", "AAA is a key concept in security", "Pentester");
+    await util.insertOne(collection, note);
     res.sendFile("member.html", { root: config.ROOT });
 });
+
 // HTTP GET
 memberController.get("/posts", async (req, res, next) => {
-    const collection = client.db().collection("Posts");
+    const collection = client.db().collection("Notes");
     const posts = await util.findAll(collection, {});
     //Utils.saveJson(__dirname + '/../data/topics.json', JSON.stringify(topics))
     res.status(200).json(posts);
 });
-memberController.get("/post/:ID", async (request, response, next) => {
+
+memberController.get("/note/:ID", async (request, response, next) => {
     // extract the querystring from url
     const id = request.params.ID;
-    console.info(`Post Id ${id}`);
-    const collection = client.db().collection("Posts");
-    const post = await util.findOne(collection, id);
-    //const data = Utils.readJson(__dirname + '/../data/posts.json')
+    console.info(`Note Id ${id}`);
+    const collection = client.db().collection("Notes");
+    const note = await util.findOne(collection, id);
+    //const data = Utils.readJson(__dirname + '/../data/notes.json')
     //util.insertMany(posts, data[id])
-    console.log("Post", post);
-    response.status(200).json({ post: post });
+    console.log("Note", note);
+    response.status(200).json({ note: note });
 });
+
 memberController.get("/postMessage", async (req, res, next) => {
     res.sendFile("postMessage.html", { root: config.ROOT });
 });
+
 // HTTP POST
-memberController.post("/addPost", async (req, res, next) => {
-    const collection = client.db().collection("Posts");
+memberController.post("/addNote", async (req, res, next) => {
+    const collection = client.db().collection("Notes");
     const topic = req.body.topic;
     const message = req.body.message;
     const user = req.body.postedBy;
-    const post = Post(topic, message, user);
-    util.insertOne(collection, post);
+    const note = Note(topic, message, user);
+    util.insertOne(collection, note);
 
     // res.json(
     //     {
-    //         message: `You post was added to the ${topic} forum`
+    //         message: `You note was added to the ${topic} forum`
     //     }
     // )
     //Utils.saveJson(__dirname + '/../data/posts.json', JSON.stringify(posts))
