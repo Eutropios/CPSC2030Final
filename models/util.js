@@ -1,8 +1,9 @@
-;(() => {
-    const mongodb = require("mongodb")
-    const MongoClient = mongodb.MongoClient
-    let mongodbClient = null
-    const connection = require("./config/config.js")
+(() => {
+    const mongodb = require("mongodb");
+    const MongoClient = mongodb.MongoClient;
+    let mongodbClient = null;
+    const connection = require("./config/config.js");
+
     //-------------------------------------------------------------------------
     /**
      * Connection Strings
@@ -11,16 +12,17 @@
     //----------------------------------------------------------------
     //let uri =
     const getMongoClient = (local = true) => {
-        let uri = `mongodb+srv://${connection.USERNAME}:${connection.PASSWORD}@${connection.SERVER}/${connection.DATABASE}?retryWrites=true&w=majority&appName=Test-Cluster`
+        let uri = `mongodb+srv://${connection.USERNAME}:${connection.PASSWORD}@${connection.SERVER}/${connection.DATABASE}?retryWrites=true&w=majority&appName=Test-Cluster`;
         if (local) {
-            uri = `mongodb://127.0.0.1:27017/${connection.DATABASE}`
+            uri = `mongodb://127.0.0.1:27017/${connection.DATABASE}`;
         }
-        console.log(`Connection String<<${uri}`)
+        console.log(`Connection String<<${uri}`);
         if (!mongodbClient) {
-            mongodbClient = new MongoClient(uri)
+            mongodbClient = new MongoClient(uri);
         }
-        return mongodbClient
-    }
+        return mongodbClient;
+    };
+
     //-------------------------------------------------------------------------
     /**
      * Data Manipulation Language (DML) functions
@@ -32,81 +34,88 @@
             .find(query)
             .toArray()
             .catch((err) => {
-                console.log("Could not find ", query, err.message)
-            })
-    }
+                console.log("Could not find ", query, err.message);
+            });
+    };
+
     const findOne = async (collection, id) => {
         return collection.findOne({ _id: new mongodb.ObjectId(id) }).catch((err) => {
-            console.log(`Could not find document with id=${id} `, err.message)
-        })
-    }
+            console.log(`Could not find document with id=${id} `, err.message);
+        });
+    };
+
     //delete matching documents
     const deleteMany = async (collection, query) => {
         return collection.deleteMany(query).catch((err) => {
-            console.log("Could not delete many ", query, err.message)
-        })
-    }
+            console.log("Could not delete many ", query, err.message);
+        });
+    };
+
     //delete one matching document
     const deleteOne = async (collection, query) => {
         return collection.deleteOne(query).catch((err) => {
-            console.log("Could not delete one ", query, err.message)
-        })
-    }
+            console.log("Could not delete one ", query, err.message);
+        });
+    };
+
     //insert data into our collection
     const insertMany = async (collection, documents) => {
         return collection
             .insertMany(documents)
             .then((res) => console.log("Data inserted with IDs", res.insertedIds))
             .catch((err) => {
-                console.log("Could not add data ", err.message)
+                console.log("Could not add data ", err.message);
                 //For now, ingore duplicate entry errors, otherwise re-throw the error for the next catch
-                if (!(err.name === "BulkWriteError" && err.code === 11000)) throw err
-            })
-    }
+                if (!(err.name === "BulkWriteError" && err.code === 11000)) throw err;
+            });
+    };
+
     const insertOne = async (collection, document) => {
         return await collection
             .insertOne(document)
             .then((res) => console.log("Data inserted with ID", res.insertedId))
             .catch((err) => {
-                console.log("Could not add data ", err.message)
+                console.log("Could not add data ", err.message);
                 //For now, ingore duplicate entry errors, otherwise re-throw the error for the next catch
-                if (!(err.name === "BulkWriteError" && err.code === 11000)) throw err
-            })
-    }
+                if (!(err.name === "BulkWriteError" && err.code === 11000)) throw err;
+            });
+    };
+
     //-------------------------------------------------------------------------
     const logRequest = async (req, res) => {
-        const client = util.getMongoClient(false)
+        const client = util.getMongoClient(false);
         client
             .connect()
             .then((conn) => {
-                console.log("\t|inside connect()")
+                console.log("\t|inside connect()");
                 console.log(
                     "\t|Connected successfully to MongoDB!",
                     // biome-ignore lint/performance/useTopLevelRegex: Not important for us
                     conn.s.url.replace(/:([^:@]{1,})@/, ":****@"),
-                )
+                );
                 /**
                  * Create a collection in a MongoDB database
                  * Like a database, a collection will be created if it does not exist
                  * The collection will only be created once we insert a document
                  */
-                const collection = client.db().collection("Requests")
+                const collection = client.db().collection("Requests");
                 const log = {
                     Timestamp: new Date(),
                     Method: req.method,
                     Path: req.url,
                     Query: req.query,
                     "Status Code": res.statusCode,
-                }
+                };
                 //console.log(log)
-                util.insertOne(collection, log)
+                util.insertOne(collection, log);
             })
             .catch((err) => console.log(`\t|Could not connect to MongoDB Server\n\t|${err}`))
             .finally(() => {
                 //client.close()
                 //console.log('Disconnected')
-            })
-    }
+            });
+    };
+
     const util = {
         url: "localhost",
         username: "webuser",
@@ -120,7 +129,7 @@
         findOne: findOne,
         insertOne: insertOne,
         insertMany: insertMany,
-    }
-    const moduleExport = util
-    if (typeof __dirname !== "undefined") module.exports = moduleExport
-})()
+    };
+    const moduleExport = util;
+    if (typeof __dirname !== "undefined") module.exports = moduleExport;
+})();
