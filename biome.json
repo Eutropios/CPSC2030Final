@@ -52,6 +52,7 @@
                 "noNodejsModules": "off"
             },
             "style": {
+                "useBlockStatements": "off",
                 "useNamingConvention": "off"
             },
             "suspicious": {

@@ -1,8 +1,8 @@
 (() => {
     const mongodb = require("mongodb");
+    const connection = require("./config/config.js");
     const MongoClient = mongodb.MongoClient;
     let mongodbClient = null;
-    const connection = require("./config/config.js");
 
     //-------------------------------------------------------------------------
     /**
@@ -10,16 +10,17 @@
      */
     //-------------------------------------------------------------------------
     //----------------------------------------------------------------
-    //let uri =
+
+    /**
+     *
+     * @param {boolean} local
+     * @returns {MongoClient}
+     */
     const getMongoClient = (local = true) => {
         let uri = `mongodb+srv://${connection.USERNAME}:${connection.PASSWORD}@${connection.SERVER}/${connection.DATABASE}?retryWrites=true&w=majority&appName=Test-Cluster`;
-        if (local) {
-            uri = `mongodb://127.0.0.1:27017/${connection.DATABASE}`;
-        }
+        if (local) uri = `mongodb://127.0.0.1:27017/${connection.DATABASE}`;
         console.log(`Connection String<<${uri}`);
-        if (!mongodbClient) {
-            mongodbClient = new MongoClient(uri);
-        }
+        if (!mongodbClient) mongodbClient = new MongoClient(uri);
         return mongodbClient;
     };
 
@@ -129,6 +130,8 @@
         findOne: findOne,
         insertOne: insertOne,
         insertMany: insertMany,
+        deleteOne: deleteOne,
+        deleteMany: deleteMany,
     };
     const moduleExport = util;
     if (typeof __dirname !== "undefined") module.exports = moduleExport;

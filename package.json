@@ -11,14 +11,16 @@
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
     "@types/express": "5.0.1",
-    "@types/node": "22.13.14"
+    "@types/node": "22.13.14",
+    "@types/bcrypt": "^5.0.2",
+    "@types/mongodb": "^4.0.6"
   },
   "keywords": [
     "notes",
     "website"
   ],
   "main": "server/server.js",
-  "name": "notewebsite",
+  "name": "notes.js",
   "scripts": {
     "start": "nodemon server/server.js"
   },
