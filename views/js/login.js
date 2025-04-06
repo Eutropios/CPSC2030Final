@@ -19,7 +19,7 @@ loginForm.addEventListener("submit", async (event) => {
 
         if (!response.ok) {
             const errorText = await response.text();
-            alert("Login failed: " + errorText);
+            alert(`Login failed: ${errorText}`);
             return;
         }
 
@@ -36,6 +36,6 @@ loginForm.addEventListener("submit", async (event) => {
             <div id="notesContainer"></div>
         `;
     } catch (error) {
-        alert("Something went wrong: " + error.message);
+        alert(`Something went wrong: ${error.message}`);
     }
 });
