@@ -33,6 +33,9 @@
             );
 
             cardColumn.appendChild(card);
+
+            // We'll have to add this to the database too afterwards
+            // Add listeners to note that modify database content for the note
         }
 
         newNote.addEventListener("click", createNoteCard);

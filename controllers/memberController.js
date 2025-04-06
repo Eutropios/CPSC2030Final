@@ -33,11 +33,11 @@ memberController.get("/member", authenticateUser, async (req, res, next) => {
 });
 
 // HTTP GET
-memberController.get("/posts", async (req, res, next) => {
+memberController.get("/notes", async (req, res, next) => {
     const collection = client.db().collection("Notes");
-    const posts = await util.findAll(collection, {});
+    const notes = await util.findAll(collection, {});
     //Utils.saveJson(__dirname + '/../data/topics.json', JSON.stringify(topics))
-    res.status(200).json(posts);
+    res.status(200).json(notes);
 });
 
 memberController.get("/note/:ID", async (request, response, next) => {
@@ -47,13 +47,13 @@ memberController.get("/note/:ID", async (request, response, next) => {
     const collection = client.db().collection("Notes");
     const note = await util.findOne(collection, id);
     //const data = Utils.readJson(__dirname + '/../data/notes.json')
-    //util.insertMany(posts, data[id])
+    //util.insertMany(notes, data[id])
     console.log("Note", note);
     response.status(200).json({ note: note });
 });
 
 memberController.get("/postMessage", async (req, res, next) => {
-    res.sendFile("postMessage.html", { root: config.ROOT });
+    await res.sendFile("postMessage.html", { root: config.ROOT });
 });
 
 // HTTP POST
@@ -63,15 +63,15 @@ memberController.post("/addNote", async (req, res, next) => {
     const message = req.body.message;
     const user = req.body.postedBy;
     const note = Note(topic, message, user);
-    util.insertOne(collection, note);
+    await util.insertOne(collection, note);
 
     // res.json(
     //     {
     //         message: `You note was added to the ${topic} forum`
     //     }
     // )
-    //Utils.saveJson(__dirname + '/../data/posts.json', JSON.stringify(posts))
-    res.redirect("/posts.html");
+    //Utils.saveJson(__dirname + '/../data/notes.json', JSON.stringify(notes))
+    res.redirect("/notes.html");
 });
 
 module.exports = memberController;

@@ -1,8 +1,10 @@
+const loginForm = document.querySelector("form#loginFirm");
 loginForm.addEventListener("submit", async (event) => {
     event.preventDefault(); // Prevent traditional form submission
 
     const username = document.getElementById("username").value;
     const password = document.getElementById("password").value;
+    console.log(username, password);
 
     try {
         const response = await fetch("/login", {
@@ -22,6 +24,8 @@ loginForm.addEventListener("submit", async (event) => {
             alert(`Login failed: ${errorText}`);
             return;
         }
+
+        // THIS CONTENT SHOULD BE RETURNED ON SUCCESSFUL LOGIN
 
         // Success - show account area
         loginDiv.style.display = "none";
