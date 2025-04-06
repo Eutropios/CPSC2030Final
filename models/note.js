@@ -1,11 +1,10 @@
-(() => {
-    const Note = (topic, message, by) => {
-        return {
-            Topic: topic,
-            Message: message,
-            By: by,
-            At: new Date().toUTCString(),
-        };
+const Note = (ownerId, title, content) => {
+    return {
+        ownerId: ownerId,
+        title: title,
+        dateCreated: new Date().toUTCString(),
+        dateModified: new Date().toUTCString(),
+        content: content,
     };
-    module.exports = Note;
-})();
+};
+module.exports = Note;

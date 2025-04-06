@@ -6,9 +6,9 @@ const path = require("node:path");
 /*
   Loading external modules
 */
+require("dotenv").config();
 const express = require("express");
 const server = express();
-require("dotenv").config();
 /*
   Loading internal modules
 */
@@ -27,9 +27,11 @@ server.use((request, response, next) => {
     util.logRequest(request, response);
     next();
 });
+
 homeController.get("/", (req, res) => {
     res.sendFile("index.html");
 });
+
 server.use(homeController);
 server.use(memberController);
 
@@ -41,6 +43,7 @@ server.use((req, res, next) => {
     //res.status(404).sendFile('404.html',{root:config.ROOT})
     res.status(404).sendFile("404.html", { root: config.ROOT });
 });
+
 server.listen(config.PORT, "localhost", () => {
     console.log(`\t|Server listening on ${config.PORT}`);
 });

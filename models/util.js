@@ -123,7 +123,7 @@
         password: "letmein",
         port: 22643,
         database: "forum",
-        collections: ["logs", "posts", "users", "roles"],
+        collections: ["logs", "notes", "users", "roles"],
         getMongoClient: getMongoClient,
         logRequest: logRequest,
         findAll: findAll,
