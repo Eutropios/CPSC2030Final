@@ -8,11 +8,6 @@ const util = require("../models/util.js");
 const User = require("../models/user.js");
 const client = util.getMongoClient(false);
 
-console.log("DELETE THE TEST VARIABLES AFTER MOVING TO DB");
-const saltRounds = 10;
-const testPassword = "bob";
-const testHash = "$2b$10$dutIAZG0D4w4.oYsNxPVVe1Re7quRRY7K9aaKZkDs/vn3SII.gel.";
-
 router.use(
     session({
         secret: process.env.SESSION_SECRET || "secret",
@@ -41,15 +36,6 @@ router.post("/login", async (req, res) => {
     console.log(
         "REMEMBER TO MERGE THESE TWO WARNINGS ONCE WE'VE FINISHED DEBUGGING TO AVOID LEAKING DATA",
     );
-
-    // Move this to registration
-    bcrypt.hash(password, saltRounds, (err, hash) => {
-        console.log(`Hash: ${hash}`);
-        // Store hash in database here
-    });
-
-    const testMatch = await bcrypt.compare(testPassword, testHash);
-    console.log(testMatch);
     const match = await bcrypt.compare(password, user.password);
     if (!match) return res.status(401).send("Invalid password");
 
