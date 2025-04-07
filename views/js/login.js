@@ -45,8 +45,7 @@ loginForm.addEventListener("submit", async (event) => {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
-                },
-                body: "none", // memberController.get("/notes") needs to be updated a bit i think
+                }, // memberController.get("/notes") needs to be tested, may not work
             })
             for(note in userNotes){
                 if (note.ownerID == username){
