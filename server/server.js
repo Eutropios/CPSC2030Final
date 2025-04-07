@@ -42,8 +42,6 @@ homeController.get("/", (req, res) => {
 
 server.use(homeController);
 server.use(memberController);
-const authController = require("../controllers/authController.js");
-server.use(authController);
 
 // catch all middleware
 server.use((req, res, next) => {

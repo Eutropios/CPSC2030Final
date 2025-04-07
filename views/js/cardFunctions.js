@@ -2,7 +2,7 @@
     document.addEventListener("DOMContentLoaded", () => {
         const newNote = document.querySelector("#addNote");
 
-        function createNoteCard() {
+        const createNoteCard = () => {
             const cardColumn = document.querySelector("#cardContainer");
             const card = document.createElement("div");
             card.classList.add("card", "noteCard", "mt-2");
@@ -36,7 +36,7 @@
 
             // We'll have to add this to the database too afterwards
             // Add listeners to note that modify database content for the note
-        }
+        };
 
         newNote.addEventListener("click", createNoteCard);
     });
