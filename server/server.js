@@ -29,7 +29,7 @@ server.use((request, response, next) => {
         request.url.endsWith(".css") ||
         request.url.endsWith(".js") ||
         request.url.endsWith(".map") ||
-        request.url.endsWith(".svg") ||
+        request.url.endsWith(".png") ||
         request.url.endsWith(".ico")
     );
     if (shouldLog) util.logRequest(request, response);
@@ -42,6 +42,8 @@ homeController.get("/", (req, res) => {
 
 server.use(homeController);
 server.use(memberController);
+const authController = require("../controllers/authController.js");
+server.use(authController);
 
 // catch all middleware
 server.use((req, res, next) => {
