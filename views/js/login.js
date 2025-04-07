@@ -1,4 +1,4 @@
-const loginForm = document.querySelector("form#loginFirm");
+const loginForm = document.querySelector("form#loginForm");
 loginForm.addEventListener("submit", async (event) => {
     event.preventDefault(); // Prevent traditional form submission
 

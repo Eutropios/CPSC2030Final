@@ -12,13 +12,14 @@
     //----------------------------------------------------------------
 
     /**
-     *
-     * @param {boolean} local
-     * @returns {MongoClient}
+     * Creates and returns a MongoDB client instance.
+     * @param {boolean} [local=true] - Whether to use the local MongoDB connection string.
+     * @returns {MongoClient} - The MongoDB client instance.
      */
     const getMongoClient = (local = true) => {
-        let uri = `mongodb+srv://${connection.USERNAME}:${connection.PASSWORD}@${connection.SERVER}/${connection.DATABASE}?retryWrites=true&w=majority&appName=Test-Cluster`;
-        if (local) uri = `mongodb://127.0.0.1:27017/${connection.DATABASE}`;
+        const uri = local
+            ? `mongodb://127.0.0.1:27017/${connection.DATABASE}`
+            : `mongodb+srv://${connection.USERNAME}:${connection.PASSWORD}@${connection.SERVER}/${connection.DATABASE}?retryWrites=true&w=majority&appName=Test-Cluster`;
         console.log(`Connection String<<${uri}`);
         if (!mongodbClient) mongodbClient = new MongoClient(uri);
         return mongodbClient;
@@ -29,7 +30,6 @@
      * Data Manipulation Language (DML) functions
      */
     //-------------------------------------------------------------------------
-    //find matching documents
     const findAll = async (collection, query) => {
         return collection
             .find(query)
@@ -45,28 +45,25 @@
         });
     };
 
-    //delete matching documents
     const deleteMany = async (collection, query) => {
         return collection.deleteMany(query).catch((err) => {
             console.log("Could not delete many ", query, err.message);
         });
     };
 
-    //delete one matching document
     const deleteOne = async (collection, query) => {
         return collection.deleteOne(query).catch((err) => {
             console.log("Could not delete one ", query, err.message);
         });
     };
 
-    //insert data into our collection
     const insertMany = async (collection, documents) => {
         return collection
             .insertMany(documents)
             .then((res) => console.log("Data inserted with IDs", res.insertedIds))
             .catch((err) => {
                 console.log("Could not add data ", err.message);
-                //For now, ingore duplicate entry errors, otherwise re-throw the error for the next catch
+                //For now, ignore duplicate entry errors, otherwise re-throw the error for the next catch
                 if (!(err.name === "BulkWriteError" && err.code === 11000)) throw err;
             });
     };
@@ -77,7 +74,7 @@
             .then((res) => console.log("Data inserted with ID", res.insertedId))
             .catch((err) => {
                 console.log("Could not add data ", err.message);
-                //For now, ingore duplicate entry errors, otherwise re-throw the error for the next catch
+                //For now, ignore duplicate entry errors, otherwise re-throw the error for the next catch
                 if (!(err.name === "BulkWriteError" && err.code === 11000)) throw err;
             });
     };
@@ -91,7 +88,6 @@
                 console.log("\t|inside connect()");
                 console.log(
                     "\t|Connected successfully to MongoDB!",
-                    // biome-ignore lint/performance/useTopLevelRegex: Not important for us
                     conn.s.url.replace(/:([^:@]{1,})@/, ":****@"),
                 );
                 /**
