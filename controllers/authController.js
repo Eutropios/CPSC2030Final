@@ -44,8 +44,9 @@ router.post("/login", async (req, res) => {
 });
 
 router.post("/register", async (req, res) => {
+    console.log("Waldo");
     const collection = client.db().collection("Users");
-    const user = await util.findOne({ username: req.body.username }, collection);
+    const user = await util.findOne(collection, { username: req.body.username });
     if (user) {
         return res.status(400).send("User already exists. Please sign in");
     }
@@ -53,11 +54,7 @@ router.post("/register", async (req, res) => {
         const salt = await bcrypt.genSalt(10);
         const password = await bcrypt.hash(req.body.password, salt);
         const username = req.body.username;
-        const newUser = new User({
-            username: username,
-            password: password,
-            role: req.body.role,
-        });
+        const newUser = User(username, password);
         await util.insertOne(collection, newUser);
         return res.status(201).json(newUser);
     } catch (err) {
