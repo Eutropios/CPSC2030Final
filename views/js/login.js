@@ -48,7 +48,7 @@ loginForm.addEventListener("submit", async (event) => {
                 }, // memberController.get("/notes") needs to be tested, may not work
             })
             for(note in userNotes){
-                if (note.ownerID == username){
+                if (note.ownerID === username){
                     createNoteCard(note.title, note.content)
                 }
             }
