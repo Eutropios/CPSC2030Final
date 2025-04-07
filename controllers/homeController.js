@@ -10,14 +10,13 @@ const homeController = express.Router();
 homeController.post("/register", util.logRequest, async (req, res, next) => {
     console.log("register");
     const collection = client.db().collection("Users");
-    const email = req.body.email;
+    const username = req.body.username;
     const password = req.body.password;
-    const confirm = req.body.confirm;
 
     if (password !== confirm) {
         console.log("\t|Password does not match");
     } else {
-        const user = User(email, password);
+        const user = User(username, password);
         console.info(user);
         await util.insertOne(collection, user);
     }
