@@ -45,7 +45,7 @@ memberController.get("/note/:ID", async (request, response, next) => {
     const id = request.params.ID;
     console.info(`Note Id ${id}`);
     const collection = client.db().collection("Notes");
-    const note = await util.findOne(collection, id);
+    const note = await util.findOneId(collection, id);
     //const data = Utils.readJson(__dirname + '/../data/notes.json')
     //util.insertMany(notes, data[id])
     console.log("Note", note);
