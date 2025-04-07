@@ -13,7 +13,7 @@ router.use(
     }),
 );
 
-const usersFile = path.join(__dirname, "../data/users.json");
+const usersFile = path.join(__dirname, "../models/users.json");
 
 function getUsers() {
     const data = fs.readFileSync(usersFile);
@@ -27,9 +27,11 @@ router.get("/login", (req, res) => {
 router.post("/login", async (req, res) => {
     const { username, password, role } = req.body;
     const users = getUsers();
-
     const user = users.find((u) => u.username === username && u.role === role);
     if (!user) return res.status(401).send("Invalid user or role");
+    console.log(
+        "REMEMBER TO MERGE THESE TWO WARNINGS ONCE WE'VE FINISHED DEBUGGING TO AVOID LEAKING DATA",
+    );
 
     const match = await bcrypt.compare(password, user.password);
     if (!match) return res.status(401).send("Invalid password");

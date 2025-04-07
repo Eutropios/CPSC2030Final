@@ -51,6 +51,9 @@
             "correctness": {
                 "noNodejsModules": "off"
             },
+            "performance": {
+                "useTopLevelRegex": "off"
+            },
             "style": {
                 "useBlockStatements": "off",
                 "useNamingConvention": "off"
