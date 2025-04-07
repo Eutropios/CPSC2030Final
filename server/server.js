@@ -24,7 +24,15 @@ server.use(express.static(config.ROOT));
 server.use(express.json());
 server.use(express.urlencoded({ extended: false }));
 server.use((request, response, next) => {
-    util.logRequest(request, response);
+    const shouldLog = !(
+        request.url.startsWith("https://cdn.jsdelivr.net/") ||
+        request.url.endsWith(".css") ||
+        request.url.endsWith(".js") ||
+        request.url.endsWith(".map") ||
+        request.url.endsWith(".svg") ||
+        request.url.endsWith(".ico")
+    );
+    if (shouldLog) util.logRequest(request, response);
     next();
 });
 
@@ -34,7 +42,6 @@ homeController.get("/", (req, res) => {
 
 server.use(homeController);
 server.use(memberController);
-
 const authController = require("../controllers/authController.js");
 server.use(authController);
 
