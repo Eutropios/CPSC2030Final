@@ -7,11 +7,11 @@
   {
     "username": "user1",
     "password": "$2b$10$xyz456hashedpassword",
-    "role": "user"
+    "role": "member"
   },
   {
     "username": "bob",
     "password": "$2b$10$dutIAZG0D4w4.oYsNxPVVe1Re7quRRY7K9aaKZkDs/vn3SII.gel.",
-    "role": "user"
+    "role": "member"
   }
 ]
