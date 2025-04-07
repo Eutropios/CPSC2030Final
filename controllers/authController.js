@@ -4,6 +4,9 @@ const path = require("node:path");
 const router = express.Router();
 const bcrypt = require("bcrypt");
 const session = require("express-session");
+const util = require("../models/util.js");
+const User = require("../models/user.js");
+const client = util.getMongoClient(false);
 
 console.log("DELETE THE TEST VARIABLES AFTER MOVING TO DB");
 const saltRounds = 10;
@@ -40,13 +43,11 @@ router.post("/login", async (req, res) => {
     );
 
     // Move this to registration
-    bcrypt.genSalt(saltRounds, (err, salt) => {
-        console.log(`Salt: ${salt}`);
-        bcrypt.hash(testPassword, salt, (err, hash) => {
-            // hash returned here
-            console.log(`Hash: ${hash}`);
-        });
+    bcrypt.hash(password, saltRounds, (err, hash) => {
+        console.log(`Hash: ${hash}`);
+        // Store hash in database here
     });
+
     const testMatch = await bcrypt.compare(testPassword, testHash);
     console.log(testMatch);
     const match = await bcrypt.compare(password, user.password);
@@ -54,6 +55,28 @@ router.post("/login", async (req, res) => {
 
     req.session.user = { username, role };
     res.redirect(role === "admin" ? "/admin" : "/user");
+});
+
+router.post("/register", async (req, res) => {
+    const collection = client.db().collection("Users");
+    const user = await util.findOne({ username: req.body.username }, collection);
+    if (user) {
+        return res.status(400).send("User already exists. Please sign in");
+    }
+    try {
+        const salt = await bcrypt.genSalt(10);
+        const password = await bcrypt.hash(req.body.password, salt);
+        const username = req.body.username;
+        const newUser = new User({
+            username: username,
+            password: password,
+            role: req.body.role,
+        });
+        await util.insertOne(collection, newUser);
+        return res.status(201).json(newUser);
+    } catch (err) {
+        return res.status(400).json({ message: err.message });
+    }
 });
 
 // GET logout

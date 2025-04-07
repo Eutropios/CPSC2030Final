@@ -39,7 +39,13 @@
             });
     };
 
-    const findOne = async (collection, id) => {
+    const findOne = async (collection, query) => {
+        return collection.findOne(query).catch((err) => {
+            console.log(`Could not find document with query=${query} `, err.message);
+        });
+    };
+
+    const findOneId = async (collection, id) => {
         return collection.findOne({ _id: new mongodb.ObjectId(id) }).catch((err) => {
             console.log(`Could not find document with id=${id} `, err.message);
         });
@@ -124,6 +130,7 @@
         logRequest: logRequest,
         findAll: findAll,
         findOne: findOne,
+        findOneId: findOneId,
         insertOne: insertOne,
         insertMany: insertMany,
         deleteOne: deleteOne,
