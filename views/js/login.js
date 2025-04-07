@@ -15,7 +15,7 @@ loginForm.addEventListener("submit", async (event) => {
             body: JSON.stringify({
                 username,
                 password,
-                role: "user", // or "admin" if logging in as admin
+                role: "member", // or "admin" if logging in as admin
             }),
         });
 
@@ -46,16 +46,15 @@ loginForm.addEventListener("submit", async (event) => {
                 headers: {
                     "Content-Type": "application/json",
                 }, // memberController.get("/notes") needs to be tested, may not work
-            })
-            for(note in userNotes){
-                if (note.ownerID === username){
-                    createNoteCard(note.title, note.content)
+            });
+            for (note in userNotes) {
+                if (note.ownerID === username) {
+                    createNoteCard(note.title, note.content);
                 }
             }
-        } catch(error){
+        } catch (error) {
             alert(`Couldn't retrieve ${username}'s notes: ${error.message}`);
-        };
-        
+        }
     } catch (error) {
         alert(`Something went wrong: ${error.message}`);
     }
