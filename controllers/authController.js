@@ -5,6 +5,11 @@ const router = express.Router();
 const bcrypt = require("bcrypt");
 const session = require("express-session");
 
+console.log("DELETE THE TEST VARIABLES AFTER MOVING TO DB");
+const saltRounds = 10;
+const testPassword = "bob";
+const testHash = "$2b$10$dutIAZG0D4w4.oYsNxPVVe1Re7quRRY7K9aaKZkDs/vn3SII.gel.";
+
 router.use(
     session({
         secret: process.env.SESSION_SECRET || "secret",
@@ -13,12 +18,13 @@ router.use(
     }),
 );
 
+// Pull this into db once passwd is complete
 const usersFile = path.join(__dirname, "../models/users.json");
 
-function getUsers() {
+const getUsers = () => {
     const data = fs.readFileSync(usersFile);
     return JSON.parse(data);
-}
+};
 
 router.get("/login", (req, res) => {
     res.sendFile("login.html", { root: path.join(__dirname, "../views") });
@@ -33,6 +39,16 @@ router.post("/login", async (req, res) => {
         "REMEMBER TO MERGE THESE TWO WARNINGS ONCE WE'VE FINISHED DEBUGGING TO AVOID LEAKING DATA",
     );
 
+    // Move this to registration
+    bcrypt.genSalt(saltRounds, (err, salt) => {
+        console.log(`Salt: ${salt}`);
+        bcrypt.hash(testPassword, salt, (err, hash) => {
+            // hash returned here
+            console.log(`Hash: ${hash}`);
+        });
+    });
+    const testMatch = await bcrypt.compare(testPassword, testHash);
+    console.log(testMatch);
     const match = await bcrypt.compare(password, user.password);
     if (!match) return res.status(401).send("Invalid password");
 
