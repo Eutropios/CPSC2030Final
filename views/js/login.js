@@ -39,6 +39,23 @@ loginForm.addEventListener("submit", async (event) => {
             <button type="button" class="btn btn-primary btn-sm" id="newNoteButton">New Note</button>
             <div id="notesContainer"></div>
         `;
+
+        try {
+            const userNotes = await fetch("/notes", {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                }, // memberController.get("/notes") needs to be tested, may not work
+            })
+            for(note in userNotes){
+                if (note.ownerID === username){
+                    createNoteCard(note.title, note.content)
+                }
+            }
+        } catch(error){
+            alert(`Couldn't retrieve ${username}'s notes: ${error.message}`);
+        };
+        
     } catch (error) {
         alert(`Something went wrong: ${error.message}`);
     }
