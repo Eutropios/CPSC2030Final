@@ -28,9 +28,10 @@ loginForm.addEventListener("submit", async (event) => {
         // THIS CONTENT SHOULD BE RETURNED ON SUCCESSFUL LOGIN
 
         // Success - show account area
+        const loginDiv = document.querySelector("div#login");
         loginDiv.style.display = "none";
         document.getElementById("sign-up-btn").style.display = "none";
-        accountDiv.style.display = "block";
+        /*accountDiv.style.display = "block";
         document.getElementById("log-out-btn").style.display = "block";
 
         accountDiv.innerHTML = `
@@ -54,7 +55,7 @@ loginForm.addEventListener("submit", async (event) => {
             }
         } catch (error) {
             alert(`Couldn't retrieve ${username}'s notes: ${error.message}`);
-        }
+        }*/
     } catch (error) {
         alert(`Something went wrong: ${error.message}`);
     }

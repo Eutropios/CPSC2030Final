@@ -25,7 +25,9 @@ server.use(express.static(config.ROOT));
 server.use(express.json());
 server.use(express.urlencoded({ extended: false }));
 
-server.use(
+// Tanzim, I tried but I don't think I got it to work
+
+/*server.use(
     session({
         secret: process.env.SESSION_SECRET || "secret",
         resave: false,
@@ -35,13 +37,10 @@ server.use(
 
 // Add middleware to set req.user from session
 server.use((req, res, next) => {
-    if (req.session?.user) {
-        req.user = req.session.user; // Assign session user to req.user
-    } else {
-        req.user = null;
-    }
+    req.user = req.session?.user ? req.session.user : null;
     next();
-});
+});*/
+
 server.use((request, response, next) => {
     const shouldLog = !(
         request.url.startsWith("https://cdn.jsdelivr.net/") ||
