@@ -13,7 +13,21 @@
     width: 48%;
 }
 
-@media only screen and (max-width: 850px) {
+@media only screen and (max-width: 800px) {
+
+    .row {
+        display: flex;
+        flex-direction: column-reverse
+    }
+
+    .col-3 {
+        width: 100%;
+    }
+
+    .col-9 {
+        margin-top: 5%;
+        width: 100%;
+    }
 
     .responsiveBreak {
         color: white;
@@ -21,13 +35,7 @@
     }
     .noteCard {
         width: 100%;
-        font-size: 0.80em;
+        font-size: 0.90em;
     }
-
-    div .container {
-        display: flex;
-        flex-wrap: wrap;
-    }
-
 
 }
