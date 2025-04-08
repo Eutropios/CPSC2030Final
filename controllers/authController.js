@@ -22,7 +22,7 @@ router.get("/login", (req, res) => {
 router.post("/login", async (req, res) => {
     const { username, password, role } = req.body;
     const collection = client.db().collection("Users");
-    const users = await util.findOne(collection, { username: username });
+    const users = await util.findOne(collection, { username: username, role: role });
     if (!users) return res.status(401).send("Invalid username");
     console.log("MERGE THESE TWO ONCE DONE");
     const match = await bcrypt.compare(password, users.password);
