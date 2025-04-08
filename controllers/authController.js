@@ -22,18 +22,17 @@ router.get("/login", (req, res) => {
 router.post("/login", async (req, res) => {
     const { username, password, role } = req.body;
     const collection = client.db().collection("Users");
-    const users = await util.findOne(collection, { username: username, role: role });
-    if (!users) return res.status(401).send("Invalid username");
+    const user = await util.findOne(collection, { username: username, role: role });
+    if (!user) return res.status(401).send("Invalid username");
     console.log("MERGE THESE TWO ONCE DONE");
-    const match = await bcrypt.compare(password, users.password);
+    const match = await bcrypt.compare(password, user.password);
     if (!match) return res.status(401).send("Invalid password");
-
-    req.session.user = { username, role };
+    req.session.user = username;
+    req.session.role = role;
     res.redirect(role === "admin" ? "/admin" : "/member");
 });
 
 router.post("/register", async (req, res) => {
-    console.log("Waldo");
     const collection = client.db().collection("Users");
     const user = await util.findOne(collection, { username: req.body.username });
     if (user) {

@@ -67,17 +67,15 @@ loginForm.addEventListener("submit", async (event) => {
 
             const notesContainer = document.getElementById("notesContainer");
 
-            notes.forEach((note) => {
+            for (const note of notes) {
                 if (note.ownerID === data.username) {
                     const noteCard = createNoteCard(note.title, note.content);
                     notesContainer.appendChild(noteCard);
                 }
-            });
-
+            }
         } catch (error) {
             alert(`Couldn't retrieve notes: ${error.message}`);
         }
-
     } catch (error) {
         alert(`Something went wrong: ${error.message}`);
     }
