@@ -1,5 +1,4 @@
 const express = require("express");
-const fs = require("node:fs");
 const path = require("node:path");
 const router = express.Router();
 const bcrypt = require("bcrypt");
@@ -16,27 +15,17 @@ router.use(
     }),
 );
 
-// Pull this into db once passwd is complete
-const usersFile = path.join(__dirname, "../models/users.json");
-
-const getUsers = () => {
-    const data = fs.readFileSync(usersFile);
-    return JSON.parse(data);
-};
-
 router.get("/login", (req, res) => {
     res.sendFile("login.html", { root: path.join(__dirname, "../views") });
 });
 
 router.post("/login", async (req, res) => {
     const { username, password, role } = req.body;
-    const users = getUsers();
-    const user = users.find((u) => u.username === username && u.role === role);
-    if (!user) return res.status(401).send("Invalid user or role");
-    console.log(
-        "REMEMBER TO MERGE THESE TWO WARNINGS ONCE WE'VE FINISHED DEBUGGING TO AVOID LEAKING DATA",
-    );
-    const match = await bcrypt.compare(password, user.password);
+    const collection = client.db().collection("Users");
+    const users = await util.findOne(collection, { username: username });
+    if (!users) return res.status(401).send("Invalid username");
+    console.log("MERGE THESE TWO ONCE DONE");
+    const match = await bcrypt.compare(password, users.password);
     if (!match) return res.status(401).send("Invalid password");
 
     req.session.user = { username, role };
