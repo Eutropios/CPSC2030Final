@@ -11,7 +11,7 @@ const authenticateUser = (req, res, next) => {
         res.status(403);
         return res.send("You need to be logged in");
     }
-    console.log(req.user);
+    console.log(`User: ${req.user}`);
     next();
 };
 
@@ -25,12 +25,12 @@ const authenticateRole = (role, req, res, next) => {
 };
 
 memberController.get("/member", authenticateUser, async (req, res, next) => {
-    console.log("Hi");
+    /*console.log("Hi");
     console.info("Inside member.html");
     const collection = client.db().collection("Notes");
-    const note = Note("Security", "AAA is a key concept in security", "Pentester");
+    const note = Note(req.user, "AAA is a key concept in security", "Pentester");
     await util.insertOne(collection, note);
-    res.sendFile("member.html", { root: config.ROOT });
+    res.sendFile("member.html", { root: config.ROOT });*/
 });
 
 // HTTP GET
