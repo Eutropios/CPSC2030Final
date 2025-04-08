@@ -7,11 +7,11 @@ const memberController = express.Router();
 
 // Authentication & Authorization Middleware
 const authenticateUser = (req, res, next) => {
+    console.log(`User: ${req.user}`);
     if (req.user == null) {
         res.status(403);
         return res.send("You need to be logged in");
     }
-    console.log(`User: ${req.user}`);
     next();
 };
 
@@ -25,7 +25,6 @@ const authenticateRole = (role, req, res, next) => {
 };
 
 memberController.get("/member", authenticateUser, async (req, res, next) => {
-    console.info("Inside member.html");
     const collection = client.db().collection("Notes");
     const note = Note(req.user, "AAA is a key concept in security", "Pentester");
     await util.insertOne(collection, note);
