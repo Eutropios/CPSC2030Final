@@ -18,7 +18,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     role: "member", // or "admin" if logging in as admin
                 }),
             });
-            console.log("Hi");
             if (!response.ok) {
                 const errorText = await response.text();
                 alert(`Registration failed: ${errorText}`);
