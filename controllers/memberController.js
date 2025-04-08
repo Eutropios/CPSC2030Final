@@ -25,12 +25,11 @@ const authenticateRole = (role, req, res, next) => {
 };
 
 memberController.get("/member", authenticateUser, async (req, res, next) => {
-    /*console.log("Hi");
     console.info("Inside member.html");
     const collection = client.db().collection("Notes");
     const note = Note(req.user, "AAA is a key concept in security", "Pentester");
     await util.insertOne(collection, note);
-    res.sendFile("member.html", { root: config.ROOT });*/
+    res.sendFile("member.html", { root: config.ROOT });
 });
 
 // HTTP GET
