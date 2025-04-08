@@ -25,6 +25,7 @@ const authenticateRole = (role, req, res, next) => {
 };
 
 memberController.get("/member", authenticateUser, async (req, res, next) => {
+    console.log("Hi");
     console.info("Inside member.html");
     const collection = client.db().collection("Notes");
     const note = Note("Security", "AAA is a key concept in security", "Pentester");
