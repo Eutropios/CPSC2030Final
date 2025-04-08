@@ -40,7 +40,7 @@ router.post("/login", async (req, res) => {
     if (!match) return res.status(401).send("Invalid password");
 
     req.session.user = { username, role };
-    res.redirect(role === "admin" ? "/admin" : "/user");
+    res.redirect(role === "admin" ? "/admin" : "/member");
 });
 
 router.post("/register", async (req, res) => {
