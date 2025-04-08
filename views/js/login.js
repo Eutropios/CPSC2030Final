@@ -39,7 +39,7 @@ loginForm.addEventListener("submit", async (event) => {
             <button type="button" class="btn btn-primary btn-sm" id="newNoteButton">New Note</button>
             <div id="notesContainer"></div>
         `;
-
+        // Attempting to pull Notes database from server
         try {
             const userNotes = await fetch("/notes", {
                 method: "GET",
@@ -49,7 +49,7 @@ loginForm.addEventListener("submit", async (event) => {
             });
             for (note in userNotes) {
                 if (note.ownerID === username) {
-                    createNoteCard(note.title, note.content);
+                    createNoteCard(note.title, note.content, note.dateCreated);
                 }
             }
         } catch (error) {
