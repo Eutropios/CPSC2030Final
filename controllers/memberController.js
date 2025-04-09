@@ -73,4 +73,13 @@ memberController.post("/addNote", async (req, res, next) => {
     res.redirect("/notes.html");
 });
 
+// untested
+memberController.post("/updateNote", async (req, res, next) => {
+    const collection = client.db().collection("Notes");
+    const id = req.body.note._id
+    const update = req.body.edit;
+    const user = req.body.postedBy;
+    await util.updateOne(collection, id, update);
+});
+
 module.exports = memberController;
