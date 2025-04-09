@@ -38,7 +38,7 @@ loginForm.addEventListener("submit", async (event) => {
         // ✅ Show account UI, hide login/signup
         const loginDiv = document.querySelector("form#loginForm");
         loginDiv.style.display = "none";
-        document.getElementById("sign-up-btn").style.display = "none";
+        document.getElementById("signUp-Button").style.display = "none";
 
         const accountDiv = document.getElementById("account");
         accountDiv.style.display = "block";
@@ -47,7 +47,7 @@ loginForm.addEventListener("submit", async (event) => {
         accountDiv.innerHTML = `
             <h3>Welcome, ${data.username}!</h3>
             <p>Your role: ${data.role}</p>
-            <button type="button" class="btn btn-primary btn-sm" id="newNoteButton">New Note</button>
+            <button type="button" data-bs-toggle="modal" data-bs-target="#noteModal" class="btn btn-primary btn-sm" id="newNoteButton">New Note</button>
             <div id="notesContainer"></div>
         `;
 
@@ -104,7 +104,7 @@ document.getElementById("log-out-btn").addEventListener("click", () => {
     localStorage.removeItem("role");
 
     document.getElementById("account").style.display = "none";
-    document.getElementById("log-out-btn").style.display = "none";
-    document.getElementById("sign-up-btn").style.display = "block";
+    document.getElementById("log-out-btn").style.display = "block";
+    document.getElementById("signUp-Button").style.display = "block";
     document.getElementById("login").style.display = "block";
 });
