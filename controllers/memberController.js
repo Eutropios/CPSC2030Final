@@ -7,7 +7,6 @@ const memberController = express.Router();
 
 // Authentication & Authorization Middleware
 const authenticateUser = (req, res, next) => {
-    console.log(`User: ${req.user}`);
     if (req.user == null) {
         res.status(403);
         return res.send("You need to be logged in");
@@ -16,6 +15,7 @@ const authenticateUser = (req, res, next) => {
 };
 
 const authenticateRole = (role, req, res, next) => {
+    console.log(req.user.role);
     return (req, res, next) => {
         if (req.user.role === role) {
             res.status(401);
@@ -76,7 +76,7 @@ memberController.post("/addNote", async (req, res, next) => {
 // untested
 memberController.post("/updateNote", async (req, res, next) => {
     const collection = client.db().collection("Notes");
-    const id = req.body.note._id
+    const id = req.body.note._id;
     const update = req.body.edit;
     const user = req.body.postedBy;
     await util.updateOne(collection, id, update);

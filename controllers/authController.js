@@ -29,7 +29,11 @@ router.post("/login", async (req, res) => {
     if (!match) return res.status(401).send("Invalid password");
     req.session.user = username;
     req.session.role = role;
-    res.redirect(role === "admin" ? "/admin" : "/member");
+    req.session.userId = user._id.toString();
+    return res
+        .status(201)
+        .json({ username: username, password: password, role: role, userId: user._id.toString() });
+    // res.redirect(role === "admin" ? "/admin" : "/member");
 });
 
 router.post("/register", async (req, res) => {
