@@ -157,6 +157,33 @@
     };
 
     window.onload = () => {
+        document.getElementById("submitNote").addEventListener("click", () => {
+            const noteTitle = document.getElementById("noteTitle").value.trim();
+            const noteContent = document.getElementById("message-text").value.trim();
+            const notesContainer = document.getElementById("cardContainer");
+        
+            if (!noteTitle && !noteContent) {
+                alert("Please enter both a title and content.");
+                return;
+            } else if (!noteTitle) {
+                alert("Please enter a title.");
+                return;
+            } else if (!noteContent) {
+                alert("Please enter content.");
+                return;
+            }
+        
+            const newCard = createNoteCard(noteTitle, noteContent);
+            notesContainer.appendChild(newCard);
+        
+            const modalElement = document.getElementById("noteModal");
+            const modalInstance = bootstrap.Modal.getInstance(modalElement);
+            modalInstance.hide();
+        
+            document.getElementById("noteTitle").value = "";
+            document.getElementById("message-text").value = "";
+        });
+        
         const loginForm = document.querySelector("form#loginForm");
 
         loginForm.addEventListener("submit", async (event) => {
