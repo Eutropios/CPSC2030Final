@@ -28,13 +28,15 @@ loginForm.addEventListener("submit", async (event) => {
         // ✅ Parse response
         const data = await response.json();
 
+        console.log(data);
+
         // ✅ Store token and user info
         localStorage.setItem("token", data.token);
         localStorage.setItem("username", data.username);
         localStorage.setItem("role", data.role);
 
         // ✅ Show account UI, hide login/signup
-        const loginDiv = document.querySelector("div#login");
+        const loginDiv = document.querySelector("form#loginForm");
         loginDiv.style.display = "none";
         document.getElementById("sign-up-btn").style.display = "none";
 
