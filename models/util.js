@@ -85,6 +85,22 @@
             });
     };
 
+    // currently only intended for updating notes, a property param could be added if necessary
+    const updateOne = async (collection, id, update) => {
+        return await collection
+            .updateOne(
+                {_id: id},
+                {$set: {content: update, dateModified: new Date().toUTCString}}
+            )
+            // .then((res) => console.log("Data updated with ID", res.updatedId))
+            // ^commented out because not sure if updatedId exists
+            .catch((err) => {
+                console.log("Could not update data ", err.message);
+                //For now, ignore duplicate entry errors, otherwise re-throw the error for the next catch
+                if (!(err.name === "BulkWriteError" && err.code === 11000)) throw err;
+            });
+    };
+
     //-------------------------------------------------------------------------
     const logRequest = async (req, res) => {
         const client = util.getMongoClient(false);
@@ -133,6 +149,7 @@
         findOneId: findOneId,
         insertOne: insertOne,
         insertMany: insertMany,
+        updateOne: updateOne,
         deleteOne: deleteOne,
         deleteMany: deleteMany,
     };

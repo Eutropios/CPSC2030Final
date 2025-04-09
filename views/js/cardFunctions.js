@@ -4,7 +4,7 @@
         newNote.addEventListener("click", createNoteCard);
     });
 
-    const createNoteCard = (title, text) => {
+    const createNoteCard = (title, text, date) => {
         const cardColumn = document.querySelector("#cardContainer");
         const card = document.createElement("div");
         card.classList.add("card", "noteCard", "mt-2");
@@ -17,7 +17,22 @@
                         ${text}
                        </p>
                        <hr>
-                        <span class="text-center coords">Location will show here if added by user</span>
+                        <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#${date.replace(" ", "-")}">
+                            Sign Up 
+                        </button>
+                        <div
+                        class="modal fade"
+                        id="${date.replace(" ", "-")}"
+                        tabindex="-1"
+                        role="dialog"
+                        aria-labelledby="${date.replace(" ", "-")}"
+                        aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                <div>Mapbox API content will go here, API call will be sent server-side and sent back here</div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     </div>
                     <div>
@@ -27,6 +42,7 @@
                             <button type="button" class="btn btn-outline-success">Share</button>
                             <button type="button" class="btn btn-outline-danger">Delete</button>
                         </div>
+                        <span>${date}</span>
                     </div>
                     `;
 
