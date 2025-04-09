@@ -124,6 +124,7 @@
 
     const register = async (event) => {
         event.preventDefault();
+        const modal = document.getElementById("signUpModal");
         const username = document.getElementById("regUsername").value;
         const password = document.getElementById("regPassword").value;
 
@@ -144,9 +145,12 @@
                 alert(`Registration failed: ${errorText}`);
                 return;
             }
-            document.getElementById("username").value = username;
-            document.getElementById("password").value = password;
-            login(username, password);
+
+            const bootstrapModal = window.bootstrap.Modal.getInstance(modal);
+            bootstrapModal.hide();
+            await login(username, password);
+            document.getElementById("regUsername").value = "";
+            document.getElementById("regPassword").value = "";
         } catch (error) {
             alert(`Something went wrong: ${error.message}`);
         }
