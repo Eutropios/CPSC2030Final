@@ -149,7 +149,7 @@
           <div class="card">
             <div class="card-header bg-info h6">Login</div>
             <div class="card-body">
-                Welcome to notes.js! Please log in to see your notes.
+              Welcome to notes.js! Please log in to see your notes.
               <hr />
               <div id="login">
                 <form id="loginForm">
@@ -176,8 +176,7 @@
                   <button type="submit" class="btn btn-primary">Log In</button>
                 </form>
               </div>
-              <div id="account">
-              </div>
+              <div id="account"></div>
             </div>
             <div class="card-footer">
               <button
@@ -190,24 +189,54 @@
                 Sign Up
               </button>
               <!--MODAL FOR NOTE-->
-              <div class="modal fade" id="noteModal" tabindex="-1" aria-labelledby="noteModal" aria-hidden="true">
+              <div
+                class="modal fade"
+                id="noteModal"
+                tabindex="-1"
+                aria-labelledby="noteModal"
+                aria-hidden="true"
+              >
                 <div class="modal-dialog modal-lg">
                   <div class="modal-content">
-                      <form>
-                        <div class="modal-header bg-primary">
-                          <h4 class="modal-title form-control text-white" id="noteTitle" contenteditable="true">Enter title here...
-                          </h4>
-                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
+                    <form>
+                      <div class="modal-header bg-primary">
+                        <h4
+                          class="modal-title form-control text-white"
+                          id="noteTitle"
+                          contenteditable="true"
+                        >
+                          Enter title here...
+                        </h4>
+                        <button
+                          type="button"
+                          class="btn-close"
+                          data-bs-dismiss="modal"
+                          aria-label="Close"
+                        ></button>
+                      </div>
+                      <div class="modal-body">
                         <div class="mb-3">
-                          <textarea class="form-control" id="message-text" contenteditable="true">Enter message here...</textarea>
+                          <textarea
+                            class="form-control"
+                            id="message-text"
+                            contenteditable="true"
+                          >
+Enter message here...</textarea
+                          >
                         </div>
-                      </form>
-                    </div>
+                      </div>
+                    </form>
                     <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                      <button type="button" class="btn btn-primary">Send message</button>
+                      <button
+                        type="button"
+                        class="btn btn-secondary"
+                        data-bs-dismiss="modal"
+                      >
+                        Close
+                      </button>
+                      <button type="button" class="btn btn-primary">
+                        Send message
+                      </button>
                     </div>
                   </div>
                 </div>
