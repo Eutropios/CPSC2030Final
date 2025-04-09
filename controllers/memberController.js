@@ -34,7 +34,7 @@ memberController.get("/member", authenticateUser, async (req, res, next) => {
 // HTTP GET
 memberController.get("/notes", async (req, res, next) => {
     const collection = client.db().collection("Notes");
-    const notes = await util.findAll(collection, {});
+    const notes = await util.findAll(collection, { _id: req.session.userId });
     //Utils.saveJson(__dirname + '/../data/topics.json', JSON.stringify(topics))
     res.status(200).json(notes);
 });
@@ -51,17 +51,14 @@ memberController.get("/note/:ID", async (request, response, next) => {
     response.status(200).json({ note: note });
 });
 
-memberController.get("/postMessage", async (req, res, next) => {
-    await res.sendFile("postMessage.html", { root: config.ROOT });
-});
-
 // HTTP POST
 memberController.post("/addNote", async (req, res, next) => {
     const collection = client.db().collection("Notes");
-    const topic = req.body.topic;
+    const ownerId = req.session.userId;
+    const topic = req.body.title;
     const message = req.body.message;
-    const user = req.body.postedBy;
-    const note = Note(topic, message, user);
+    const note = Note(ownerId, topic, message);
+    console.log(note);
     await util.insertOne(collection, note);
 
     // res.json(

@@ -14,6 +14,7 @@ loginForm.addEventListener("submit", async (event) => {
             },
             body: JSON.stringify({
                 username,
+                password,
                 role: "member", // change to "admin" if needed
             }),
         });
@@ -36,12 +37,14 @@ loginForm.addEventListener("submit", async (event) => {
 
         // ✅ Show account UI, hide login/signup
         const loginDiv = document.querySelector("form#loginForm");
-        loginDiv.style.display = "none";
+        loginDiv.hidden = true;
         document.getElementById("sign-up-btn").style.display = "none";
 
         const accountDiv = document.getElementById("account");
         accountDiv.style.display = "block";
-        document.getElementById("log-out-btn").style.display = "block";
+        const logOutBtn = document.getElementById("log-out-btn");
+        logOutBtn.removeAttribute("hidden");
+        logOutBtn.style.display = "block";
 
         accountDiv.innerHTML = `
             <h3>Welcome, ${data.username}!</h3>
@@ -65,6 +68,7 @@ loginForm.addEventListener("submit", async (event) => {
             }
 
             const notes = await notesResponse.json();
+            console.log(notes);
 
             const notesContainer = document.getElementById("notesContainer");
 
@@ -102,8 +106,12 @@ document.getElementById("log-out-btn").addEventListener("click", () => {
     localStorage.removeItem("username");
     localStorage.removeItem("role");
 
+    const loginForm = document.getElementById("loginForm");
+    loginForm.reset();
+    loginForm.hidden = false;
     document.getElementById("account").style.display = "none";
-    document.getElementById("log-out-btn").style.display = "block";
+    const logOutBtn = document.getElementById("log-out-btn");
+    logOutBtn.hidden = true;
     document.getElementById("sign-up-btn").style.display = "block";
     document.getElementById("login").style.display = "block";
 });
