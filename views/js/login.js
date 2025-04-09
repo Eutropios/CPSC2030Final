@@ -38,7 +38,7 @@ loginForm.addEventListener("submit", async (event) => {
         // ✅ Show account UI, hide login/signup
         const loginDiv = document.querySelector("form#loginForm");
         loginDiv.style.display = "none";
-        document.getElementById("signUp-Button").style.display = "none";
+        document.getElementById("sign-up-btn").style.display = "none";
 
         const accountDiv = document.getElementById("account");
         accountDiv.style.display = "block";
@@ -105,6 +105,6 @@ document.getElementById("log-out-btn").addEventListener("click", () => {
 
     document.getElementById("account").style.display = "none";
     document.getElementById("log-out-btn").style.display = "block";
-    document.getElementById("signUp-Button").style.display = "block";
+    document.getElementById("sign-up-btn").style.display = "block";
     document.getElementById("login").style.display = "block";
 });
