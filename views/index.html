@@ -189,6 +189,7 @@
               >
                 Sign Up
               </button>
+
               <!--MODAL FOR NOTE-->
               <div
                 class="modal fade"
@@ -199,15 +200,14 @@
               >
                 <div class="modal-dialog modal-lg">
                   <div class="modal-content">
-                    <form>
+                    <form id="noteForm">
                       <div class="modal-header bg-primary">
-                        <h4
+                        <textarea
                           class="modal-title form-control text-white"
                           id="noteTitle"
                           contenteditable="true"
-                        >
-                          Enter title here...
-                        </h4>
+                          placeholder="Enter title here"
+                        ></textarea>
                         <button
                           type="button"
                           class="btn-close"
@@ -218,9 +218,8 @@
                       <div class="modal-body">
                         <div class="mb-3">
                           <textarea
-                            class="form-control"
+                            class="form-control h3"
                             id="message-text"
-                            contenteditable="true"
                             placeholder="Enter content here"
                           ></textarea>
                         </div>
@@ -234,7 +233,7 @@
                       >
                         Close
                       </button>
-                      <button type="button" class="btn btn-primary">
+                      <button type="button" id="submitNote" class="btn btn-primary">
                         Send message
                       </button>
                     </div>
