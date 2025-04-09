@@ -15,12 +15,17 @@
 
 #noteTitle {
     width: 100%;
-    background-color: rgb(66, 66, 66);
+    background-color: rgba(255, 255, 255, 0.243);
 }
 
 #message-text {
    height : 100px;
     overflow: scroll;
+}
+
+#noteTitle:placeholder {
+    color: white;
+
 }
 
 @media only screen and (max-width: 800px) {
