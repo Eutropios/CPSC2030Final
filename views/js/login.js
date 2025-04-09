@@ -14,7 +14,6 @@ loginForm.addEventListener("submit", async (event) => {
             },
             body: JSON.stringify({
                 username,
-                password,
                 role: "member", // change to "admin" if needed
             }),
         });
