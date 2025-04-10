@@ -1,10 +1,86 @@
 (() => {
-    const updateNote = async () => {
-        //
+    const updateNote = async (noteId) => {
+        try {
+            const response = await fetch("/updateNote", {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    noteId,
+                    title,
+                    content, // change to "admin" if needed
+                }),
+            });
+
+            if (!response.ok) {
+                const errorText = await response.text();
+                alert(`Login failed: ${errorText}`);
+                return;
+            }
+
+            // ✅ Parse response
+            const data = await response.json();
+        } catch (error) {
+            alert(`Something went wrong: ${error.message}`);
+        }
     };
 
-    const deleteNote = async () => {
-        //
+    const deleteNoteInDB = async (noteId) => {
+        try {
+            const response = await fetch("/deleteNote", {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    noteId,
+                }),
+            });
+
+            if (!response.ok) {
+                const errorText = await response.text();
+                alert(`Deletion failed: ${errorText}`);
+                return;
+            }
+        } catch (error) {
+            alert(`Something went wrong: ${error.message}`);
+        }
+    };
+
+    const spawnNotes = async (data) => {
+        // ✅ Fetch notes
+        try {
+            const notesResponse = await fetch("/notes", {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${data.token}`,
+                },
+            });
+
+            if (!notesResponse.ok) {
+                throw new Error("Failed to fetch notes");
+            }
+
+            const notes = await notesResponse.json();
+            const notesContainer = document.getElementById("cardContainer");
+
+            for (const note of notes) {
+                if (note.ownerId === data.userId) {
+                    const noteCard = createNoteCard(note.title, note.content);
+                    noteCard.querySelector("#edit-note").addEventListener("click", async () => {
+                        await updateNote(note._id.toString());
+                    });
+                    noteCard.querySelector("#delete-note").addEventListener("click", async () => {
+                        await deleteNoteInDB(note._id.toString());
+                    });
+                    notesContainer.appendChild(noteCard);
+                }
+            }
+        } catch (error) {
+            alert(`Couldn't retrieve notes: ${error.message}`);
+        }
     };
 
     const login = async (username, password) => {
@@ -51,33 +127,7 @@
             <button type="button" data-bs-toggle="modal" data-bs-target="#noteModal" class="btn btn-primary btn-sm" id="newNoteButton">New Note</button>
             <div id="notesContainer"></div>
         `;
-
-            // ✅ Fetch notes
-            try {
-                const notesResponse = await fetch("/notes", {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json",
-                        Authorization: `Bearer ${data.token}`,
-                    },
-                });
-
-                if (!notesResponse.ok) {
-                    throw new Error("Failed to fetch notes");
-                }
-
-                const notes = await notesResponse.json();
-                const notesContainer = document.getElementById("cardContainer");
-
-                for (const note of notes) {
-                    if (note.ownerId === data.userId) {
-                        const noteCard = createNoteCard(note.title, note.content);
-                        notesContainer.appendChild(noteCard);
-                    }
-                }
-            } catch (error) {
-                alert(`Couldn't retrieve notes: ${error.message}`);
-            }
+            spawnNotes(data);
         } catch (error) {
             alert(`Something went wrong: ${error.message}`);
         }
@@ -106,6 +156,9 @@
             </div>
         </div>
     `;
+        card.querySelector("#delete-note").addEventListener("click", () => {
+            card.innerHTML = "";
+        });
         return card;
     };
 
@@ -130,7 +183,9 @@
         const modal = document.getElementById("signUpModal");
         const username = document.getElementById("regUsername").value;
         const password = document.getElementById("regPassword").value;
-
+        if (!validatePassword(password)) {
+            return;
+        }
         try {
             const response = await fetch("/register", {
                 method: "POST",
@@ -203,6 +258,24 @@
 
         document.getElementById("noteTitle").value = "";
         document.getElementById("message-text").value = "";
+    };
+
+    // password validate
+
+    const validatePassword = (password) => {
+        const hasUppercase = /[A-Z]/.test(password);
+        const hasLowercase = /[a-z]/.test(password);
+        if (!(hasUppercase || hasLowercase)) {
+            alert("Your password must contain at least one uppercase and lowercase letter.");
+            return false;
+        }
+        if (!hasUppercase) {
+            alert("Your password is missing an uppercase.");
+            return false;
+        }
+        if (hasLowercase) return true;
+        alert("Your password is missing a lowercase.");
+        return false;
     };
 
     window.onload = () => {

@@ -61,18 +61,19 @@ memberController.put("/updateNote", async (req, res, next) => {
     const collection = client.db().collection("Notes");
     const note = await util.updateOne(collection, id, title, content);
     console.log("Note", note);
-    res.status(200).json({ note: note });
+    res.status(202).json({ note: note });
 });
 
 memberController.delete("/deleteNote", async (req, res, next) => {
     const id = req.body.noteId;
     console.info(`Note Id ${id}`);
     const collection = client.db().collection("Notes");
+    //const noteToDelete = await util.findOneId();
     const note = await util.deleteOne(collection, id);
     //const data = Utils.readJson(__dirname + '/../data/notes.json')
     //util.insertMany(notes, data[id])
     console.log("Note", note);
-    res.status(200).json({ note: note });
+    res.status(202).json({ note: note });
 });
 
 module.exports = memberController;
