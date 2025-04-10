@@ -123,10 +123,24 @@
             accountDiv.innerHTML = `
             <h3>Welcome back, ${data.username}!</h3>
             <p>Your role: ${data.role}</p>
+            ${data.role === "admin"?
+                `<div class="col">
+                    <div class=row">
+                        <label for="admin-users-list">Users:</label>
+                        <select name="users" id="admin-users-list"></select>
+                    </div>
+                    <div class=row">
+                        <button class="btn btn-primary" id="admin-fetch-btn">Fetch Notes</Button>
+                    </div>
+                </div>`:""}
             <button type="button" data-bs-toggle="modal" data-bs-target="#noteModal" class="btn btn-primary btn-sm" id="newNoteButton">New Note</button>
             <div id="notesContainer"></div>
         `;
-            spawnNotes(data);
+            if(data.role === "member"){
+                spawnNotes(data);
+            } else if(data.role === "admin"){
+                
+            }
         } catch (error) {
             alert(`Something went wrong: ${error.message}`);
         }
