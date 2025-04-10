@@ -2,6 +2,7 @@ const util = require("../models/util.js");
 const config = require("../server/config/config.js");
 const Note = require("../models/note.js");
 const express = require("express");
+const mongodb = require("mongodb");
 const client = util.getMongoClient(false);
 const memberController = express.Router();
 
@@ -68,8 +69,7 @@ memberController.delete("/deleteNote", async (req, res, next) => {
     const id = req.body.noteId;
     console.info(`Note Id ${id}`);
     const collection = client.db().collection("Notes");
-    //const noteToDelete = await util.findOneId();
-    const note = await util.deleteOne(collection, id);
+    const note = await util.deleteOne(collection, { _id: new mongodb.ObjectId(id) });
     //const data = Utils.readJson(__dirname + '/../data/notes.json')
     //util.insertMany(notes, data[id])
     console.log("Note", note);

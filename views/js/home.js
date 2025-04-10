@@ -34,7 +34,7 @@
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    noteId,
+                    noteId: noteId,
                 }),
             });
 
@@ -157,7 +157,7 @@
         </div>
     `;
         card.querySelector("#delete-note").addEventListener("click", () => {
-            card.innerHTML = "";
+            card.remove();
         });
         return card;
     };
