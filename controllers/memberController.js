@@ -32,11 +32,17 @@ memberController.get("/member", authenticateUser, async (req, res, next) => {
     res.sendFile("member.html", { root: config.ROOT });*/
 });
 
+memberController.get("/admin", authenticateUser, async (req, res, next) => {
+    /*const collection = client.db().collection("Notes");
+    const note = Note(req.user, "AAA is a key concept in security", "Pentester");
+    await util.insertOne(collection, note);
+    res.sendFile("member.html", { root: config.ROOT });*/
+});
+
 // HTTP GET
 memberController.get("/notes", async (req, res, next) => {
     const collection = client.db().collection("Notes");
     const notes = await util.findAll(collection, { ownerId: req.session.userId });
-    //Utils.saveJson(__dirname + '/../data/topics.json', JSON.stringify(topics))
     res.status(200).json(notes);
 });
 
@@ -69,8 +75,6 @@ memberController.delete("/deleteNote", async (req, res, next) => {
     console.info(`Note Id ${id}`);
     const collection = client.db().collection("Notes");
     const note = await util.deleteOne(collection, { _id: new mongodb.ObjectId(id) });
-    //const data = Utils.readJson(__dirname + '/../data/notes.json')
-    //util.insertMany(notes, data[id])
     console.log("Note", note);
     res.status(202).json({ note: note });
 });
