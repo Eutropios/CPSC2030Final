@@ -93,7 +93,6 @@
                 body: JSON.stringify({
                     username: username,
                     password: password,
-                    role: "member",
                 }),
             });
 

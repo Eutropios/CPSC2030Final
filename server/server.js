@@ -63,7 +63,6 @@ server.use(authController);
 
 // catch all middleware
 server.use((req, res, next) => {
-    //res.status(404).sendFile('404.html',{root:config.ROOT})
     res.status(404).sendFile("404.html", { root: config.ROOT });
 });
 
