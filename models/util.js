@@ -86,11 +86,11 @@
     };
 
     // currently only intended for updating notes, a property param could be added if necessary
-    const updateOne = async (collection, id, update) => {
+    const updateOne = async (collection, id, title, content) => {
         return await collection
             .updateOne(
-                {_id: id},
-                {$set: {content: update, dateModified: new Date().toUTCString}}
+                { _id: id },
+                { $set: { title: title, content: content, dateModified: new Date().toUTCString } },
             )
             // .then((res) => console.log("Data updated with ID", res.updatedId))
             // ^commented out because not sure if updatedId exists

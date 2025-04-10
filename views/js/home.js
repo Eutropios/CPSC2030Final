@@ -1,4 +1,12 @@
 (() => {
+    const updateNote = async () => {
+        //
+    };
+
+    const deleteNote = async () => {
+        //
+    };
+
     const login = async (username, password) => {
         try {
             const response = await fetch("/login", {
@@ -59,11 +67,9 @@
                 }
 
                 const notes = await notesResponse.json();
-                console.log(notes);
                 const notesContainer = document.getElementById("cardContainer");
 
                 for (const note of notes) {
-                    console.log(data);
                     if (note.ownerId === data.userId) {
                         const noteCard = createNoteCard(note.title, note.content);
                         notesContainer.appendChild(noteCard);
@@ -85,24 +91,19 @@
         card.innerHTML = `
         <div class="card-header">${title}</div>
         <div class="card-body">
-        ${content}
-        <hr />
-        <span class="coords"
-            >Location will show here if added by user</span
-        >
+            ${content}
+            <hr />
+            <span class="coords">Location will show here if added by user</span>
         </div>
         <div class="card-footer">
-        <div class="btn-group" role="group">
-            <button type="button" class="btn btn-outline-primary">
-            Edit
-            </button>
-            <button type="button" class="btn btn-outline-success">
-            Share
-            </button>
-            <button type="button" class="btn btn-outline-danger">
-            Delete
-            </button>
-        </div>
+            <div class="btn-group" role="group">
+                <button type="button" class="btn btn-outline-primary" id="edit-note">
+                Edit
+                </button>
+                <button type="button" class="btn btn-outline-danger" id="delete-note">
+                Delete
+                </button>
+            </div>
         </div>
     `;
         return card;
@@ -121,6 +122,7 @@
         logOutBtn.hidden = true;
         document.getElementById("sign-up-btn").style.display = "block";
         document.getElementById("login").style.display = "block";
+        document.getElementById("cardContainer").innerHTML = "";
     };
 
     const register = async (event) => {

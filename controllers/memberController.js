@@ -39,18 +39,6 @@ memberController.get("/notes", async (req, res, next) => {
     res.status(200).json(notes);
 });
 
-memberController.get("/note/:ID", async (request, response, next) => {
-    // extract the querystring from url
-    const id = request.params.ID;
-    console.info(`Note Id ${id}`);
-    const collection = client.db().collection("Notes");
-    const note = await util.findOneId(collection, id);
-    //const data = Utils.readJson(__dirname + '/../data/notes.json')
-    //util.insertMany(notes, data[id])
-    console.log("Note", note);
-    response.status(200).json({ note: note });
-});
-
 // HTTP POST
 memberController.post("/addNote", async (req, res, next) => {
     const collection = client.db().collection("Notes");
@@ -58,7 +46,6 @@ memberController.post("/addNote", async (req, res, next) => {
     const topic = req.body.title;
     const content = req.body.content;
     const note = Note(ownerId, topic, content);
-    console.log(note);
     await util.insertOne(collection, note);
 
     res.status(200).json({ message: `You note was added to the ${topic} forum` });
@@ -66,12 +53,26 @@ memberController.post("/addNote", async (req, res, next) => {
 });
 
 // untested
-memberController.post("/updateNote", async (req, res, next) => {
+memberController.put("/updateNote", async (req, res, next) => {
+    const id = req.body.noteId;
+    const title = req.body.title;
+    const content = req.body.content;
+    console.info(`Note Id ${id}`);
     const collection = client.db().collection("Notes");
-    const id = req.body.note._id;
-    const update = req.body.edit;
-    const user = req.body.postedBy;
-    await util.updateOne(collection, id, update);
+    const note = await util.updateOne(collection, id, title, content);
+    console.log("Note", note);
+    res.status(200).json({ note: note });
+});
+
+memberController.delete("/deleteNote", async (req, res, next) => {
+    const id = req.body.noteId;
+    console.info(`Note Id ${id}`);
+    const collection = client.db().collection("Notes");
+    const note = await util.deleteOne(collection, id);
+    //const data = Utils.readJson(__dirname + '/../data/notes.json')
+    //util.insertMany(notes, data[id])
+    console.log("Note", note);
+    res.status(200).json({ note: note });
 });
 
 module.exports = memberController;
