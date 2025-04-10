@@ -33,7 +33,6 @@ router.post("/login", async (req, res) => {
     const userId = user._id.toString();
     req.session.userId = userId;
     console.log(role);
-    if (role === "admin") res.redirect("/admin");
     return res.status(201).json({ username: username, role: role, userId: userId });
 });
 
