@@ -34,7 +34,7 @@ memberController.get("/member", authenticateUser, async (req, res, next) => {
 // HTTP GET
 memberController.get("/notes", async (req, res, next) => {
     const collection = client.db().collection("Notes");
-    const notes = await util.findAll(collection, { _id: req.session.userId });
+    const notes = await util.findAll(collection, { ownerId: req.session.userId });
     //Utils.saveJson(__dirname + '/../data/topics.json', JSON.stringify(topics))
     res.status(200).json(notes);
 });
@@ -56,18 +56,13 @@ memberController.post("/addNote", async (req, res, next) => {
     const collection = client.db().collection("Notes");
     const ownerId = req.session.userId;
     const topic = req.body.title;
-    const message = req.body.message;
-    const note = Note(ownerId, topic, message);
+    const content = req.body.content;
+    const note = Note(ownerId, topic, content);
     console.log(note);
     await util.insertOne(collection, note);
 
-    // res.json(
-    //     {
-    //         message: `You note was added to the ${topic} forum`
-    //     }
-    // )
+    res.status(200).json({ message: `You note was added to the ${topic} forum` });
     //Utils.saveJson(__dirname + '/../data/notes.json', JSON.stringify(notes))
-    res.redirect("/notes.html");
 });
 
 // untested

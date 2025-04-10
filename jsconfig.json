@@ -1,5 +1,13 @@
 {
     "typeAcquisition": {
-        "include": ["node", "express", "mongodb", "bcrypt", "express-session", "dotenv"]
+        "include": [
+            "node",
+            "express",
+            "mongodb",
+            "bcrypt",
+            "express-session",
+            "dotenv",
+            "bootstrap"
+        ]
     }
 }

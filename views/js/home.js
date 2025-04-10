@@ -7,8 +7,8 @@
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    username,
-                    password,
+                    username: username,
+                    password: password,
                     role: "member", // change to "admin" if needed
                 }),
             });
@@ -38,7 +38,7 @@
             logOutBtn.style.display = "block";
 
             accountDiv.innerHTML = `
-            <h3>Welcome, ${data.username}!</h3>
+            <h3>Welcome back, ${data.username}!</h3>
             <p>Your role: ${data.role}</p>
             <button type="button" data-bs-toggle="modal" data-bs-target="#noteModal" class="btn btn-primary btn-sm" id="newNoteButton">New Note</button>
             <div id="notesContainer"></div>
@@ -59,10 +59,12 @@
                 }
 
                 const notes = await notesResponse.json();
-                const notesContainer = document.getElementById("notesContainer");
+                console.log(notes);
+                const notesContainer = document.getElementById("cardContainer");
 
                 for (const note of notes) {
-                    if (note.ownerID === data.username) {
+                    console.log(data);
+                    if (note.ownerId === data.userId) {
                         const noteCard = createNoteCard(note.title, note.content);
                         notesContainer.appendChild(noteCard);
                     }
@@ -103,7 +105,6 @@
         </div>
         </div>
     `;
-
         return card;
     };
 
@@ -145,7 +146,6 @@
                 alert(`Registration failed: ${errorText}`);
                 return;
             }
-
             const bootstrapModal = window.bootstrap.Modal.getInstance(modal);
             bootstrapModal.hide();
             await login(username, password);
@@ -156,34 +156,54 @@
         }
     };
 
-    window.onload = () => {
-        document.getElementById("submitNote").addEventListener("click", () => {
-            const noteTitle = document.getElementById("noteTitle").value.trim();
-            const noteContent = document.getElementById("message-text").value.trim();
-            const notesContainer = document.getElementById("cardContainer");
-        
-            if (!noteTitle && !noteContent) {
-                alert("Please enter both a title and content.");
-                return;
-            } else if (!noteTitle) {
-                alert("Please enter a title.");
-                return;
-            } else if (!noteContent) {
-                alert("Please enter content.");
+    const createNote = async () => {
+        const noteTitle = document.getElementById("noteTitle").value.trim();
+        const noteContent = document.getElementById("message-text").value.trim();
+        const notesContainer = document.getElementById("cardContainer");
+
+        if (!(noteTitle || noteContent)) {
+            alert("Please enter both a title and content.");
+            return;
+        }
+        if (!noteTitle) {
+            alert("Please enter a title.");
+            return;
+        }
+        if (!noteContent) {
+            alert("Please enter content.");
+            return;
+        }
+
+        const newCard = createNoteCard(noteTitle, noteContent);
+        notesContainer.appendChild(newCard);
+        const modalElement = document.getElementById("noteModal");
+        const modalInstance = window.bootstrap.Modal.getInstance(modalElement);
+        modalInstance.hide();
+        try {
+            const response = await fetch("/addNote", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    title: noteTitle,
+                    content: noteContent,
+                }),
+            });
+            if (!response.ok) {
+                const errorText = await response.text();
+                alert(`Something went wrong creating the note: ${errorText}`);
                 return;
             }
-        
-            const newCard = createNoteCard(noteTitle, noteContent);
-            notesContainer.appendChild(newCard);
-        
-            const modalElement = document.getElementById("noteModal");
-            const modalInstance = bootstrap.Modal.getInstance(modalElement);
-            modalInstance.hide();
-        
-            document.getElementById("noteTitle").value = "";
-            document.getElementById("message-text").value = "";
-        });
-        
+        } catch (error) {
+            alert(`Something went wrong: ${error.message}`);
+        }
+
+        document.getElementById("noteTitle").value = "";
+        document.getElementById("message-text").value = "";
+    };
+
+    window.onload = () => {
         const loginForm = document.querySelector("form#loginForm");
 
         loginForm.addEventListener("submit", async (event) => {
@@ -197,5 +217,6 @@
         registerForm.addEventListener("submit", async (event) => await register(event));
         // ✅ Logout handler
         document.getElementById("log-out-btn").addEventListener("click", logout);
+        document.getElementById("submitNote").addEventListener("click", createNote);
     };
 })();

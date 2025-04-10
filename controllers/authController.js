@@ -27,6 +27,7 @@ router.post("/login", async (req, res) => {
     console.log("MERGE THESE TWO ONCE DONE");
     const match = await bcrypt.compare(password, user.password);
     if (!match) return res.status(401).send("Invalid password");
+
     req.session.user = username;
     req.session.role = role;
     const userId = user._id.toString();
