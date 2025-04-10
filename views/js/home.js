@@ -67,11 +67,8 @@
             const notesContainer = document.getElementById("cardContainer");
 
             for (const note of notes) {
-                if (note.ownerId === data.userId) {
-                    const noteCard = createNoteCard(note.title, note.content);
-                    noteCard.querySelector("#edit-note").addEventListener("click", async () => {
-                        await updateNote(note._id.toString());
-                    });
+                if (note.ownerId === data.userId || data.role === "admin") {
+                    const noteCard = createNoteCard(note._id, note.title, note.content);
                     noteCard.querySelector("#delete-note").addEventListener("click", async () => {
                         await deleteNoteInDB(note._id.toString());
                     });
@@ -157,13 +154,11 @@
                     ${content}
                 </p>
                 <hr>
-                <span>Button for opening mapbox goes here</span>
             </div>
 
                 <div class="card-footer">
                     <div class="btn-group" role="group">
                         <button type="button" id="btn-${noteId}" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="${noteId}">Edit</button>
-                        <button type="button" class="btn btn-outline-success">Share</button>
                         <button type="button" id="delete-note" class="btn btn-outline-danger">Delete</button>
                     </div>
                     <div class="modal fade" id="${noteId}" tabindex="-1" role="dialog" aria-labelledby="${noteId}" aria-hidden="true">
@@ -190,7 +185,7 @@
                     </div>
                 </div>
     `;
-        const editForm = document.querySelector(`#btn-${noteId}`);
+        const editForm = card.querySelector(`#btn-${noteId}`);
         editForm.addEventListener(
             "submit",
             async (noteId, title, content) => await updateNote(noteId, title, content),
