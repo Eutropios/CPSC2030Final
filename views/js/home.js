@@ -174,10 +174,9 @@
                             </div>
                         </div>
                     </div>
-                    <span>${date}</span>
                 </div>
     `;
-        const editForm = document.querySelector(`#${noteId}`);
+        const editForm = document.querySelector(`#btn-${noteId}`);
         editForm.addEventListener(
             "submit",
             async (noteId, title, content) => await updateNote(noteId, title, content),
@@ -258,7 +257,7 @@
             return;
         }
 
-        let noteId
+        let noteId;
         try {
             const response = await fetch("/addNote", {
                 method: "POST",
@@ -275,7 +274,7 @@
                 alert(`Something went wrong creating the note: ${errorText}`);
                 return;
             }
-            noteId = response._id
+            noteId = response._id;
         } catch (error) {
             alert(`Something went wrong: ${error.message}`);
         }
