@@ -50,10 +50,8 @@ memberController.post("/addNote", async (req, res, next) => {
     await util.insertOne(collection, note);
 
     res.status(200).json({ message: `You note was added to the ${topic} forum` });
-    //Utils.saveJson(__dirname + '/../data/notes.json', JSON.stringify(notes))
 });
 
-// untested
 memberController.put("/updateNote", async (req, res, next) => {
     const id = req.body.noteId;
     const title = req.body.title;
@@ -67,6 +65,7 @@ memberController.put("/updateNote", async (req, res, next) => {
 
 memberController.delete("/deleteNote", async (req, res, next) => {
     const id = req.body.noteId;
+
     console.info(`Note Id ${id}`);
     const collection = client.db().collection("Notes");
     const note = await util.deleteOne(collection, { _id: new mongodb.ObjectId(id) });

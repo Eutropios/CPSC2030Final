@@ -9,7 +9,7 @@
                 body: JSON.stringify({
                     noteId,
                     title,
-                    content, // change to "admin" if needed
+                    content,
                 }),
             });
 
@@ -19,7 +19,7 @@
                 return;
             }
 
-            // ✅ Parse response
+            //Parse response
             const data = await response.json();
         } catch (error) {
             alert(`Something went wrong: ${error.message}`);
@@ -93,7 +93,7 @@
                 body: JSON.stringify({
                     username: username,
                     password: password,
-                    role: "member", // change to "admin" if needed
+                    role: "member",
                 }),
             });
 
@@ -195,7 +195,7 @@
                 body: JSON.stringify({
                     username,
                     password,
-                    role: "member", // or "admin" if logging in as admin
+                    role: "member",
                 }),
             });
             if (!response.ok) {
@@ -260,8 +260,6 @@
         document.getElementById("message-text").value = "";
     };
 
-    // password validate
-
     const validatePassword = (password) => {
         const hasUppercase = /[A-Z]/.test(password);
         const hasLowercase = /[a-z]/.test(password);
@@ -290,7 +288,6 @@
 
         const registerForm = document.querySelector("form#registerForm");
         registerForm.addEventListener("submit", async (event) => await register(event));
-        // ✅ Logout handler
         document.getElementById("log-out-btn").addEventListener("click", logout);
         document.getElementById("submitNote").addEventListener("click", createNote);
     };

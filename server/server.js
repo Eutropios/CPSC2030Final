@@ -25,8 +25,6 @@ server.use(express.static(config.ROOT));
 server.use(express.json());
 server.use(express.urlencoded({ extended: false }));
 
-// Tanzim, I tried but I don't think I got it to work
-
 server.use(
     session({
         secret: process.env.SESSION_SECRET || "secret",
