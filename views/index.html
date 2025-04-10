@@ -232,6 +232,10 @@
                             type="password"
                             class="form-control"
                             id="regPassword"
+                            minlength="8"
+                            pattern="(?=.*[a-z])(?=.*[A-Z]).+"
+                            title="Password must contain 8 letters, an upper case, and a lower case"
+                            required
                           />
                         </div>
                         <hr />
