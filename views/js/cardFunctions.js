@@ -1,9 +1,4 @@
 (() => {
-    document.addEventListener("DOMContentLoaded", () => {
-        const newNote = document.querySelector("#addNote");
-        newNote.addEventListener("click", createNoteCard);
-    });
-
     const createNoteCard = (title, text, date) => {
         const cardColumn = document.querySelector("#cardContainer");
         const card = document.createElement("div");
@@ -18,7 +13,7 @@
                        </p>
                        <hr>
                         <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#${date.replace(" ", "-")}">
-                            Sign Up 
+                            Sign Up
                         </button>
                         <div
                         class="modal fade"
@@ -46,9 +41,7 @@
                     </div>
                     `;
 
-        card.querySelector(".btn-outline-danger").addEventListener("click", () =>
-            card.remove(),
-        );
+        card.querySelector(".btn-outline-danger").addEventListener("click", () => card.remove());
 
         cardColumn.appendChild(card);
 
