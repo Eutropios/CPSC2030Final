@@ -257,11 +257,7 @@
             return;
         }
 
-        const newCard = createNoteCard(noteTitle, noteContent);
-        notesContainer.appendChild(newCard);
-        const modalElement = document.getElementById("noteModal");
-        const modalInstance = window.bootstrap.Modal.getInstance(modalElement);
-        modalInstance.hide();
+        let noteId
         try {
             const response = await fetch("/addNote", {
                 method: "POST",
@@ -278,9 +274,16 @@
                 alert(`Something went wrong creating the note: ${errorText}`);
                 return;
             }
+            noteId = response._id
         } catch (error) {
             alert(`Something went wrong: ${error.message}`);
         }
+
+        const newCard = createNoteCard(noteId, noteTitle, noteContent);
+        notesContainer.appendChild(newCard);
+        const modalElement = document.getElementById("noteModal");
+        const modalInstance = window.bootstrap.Modal.getInstance(modalElement);
+        modalInstance.hide();
 
         document.getElementById("noteTitle").value = "";
         document.getElementById("message-text").value = "";
