@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css"
+      integrity="sha512-jnSuA4Ss2PkkikSOLtYs8BlYIeeIK1h99ty4YfvRPAlzr377vr3CXDb7sb7eEEBYjDtcYj+AjBH3FLv5uSJuXg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="icon" type="image/x-icon" href="img/favicon.ico" />
+    <link rel="stylesheet" href="css/sketch.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="./js/home.js"></script>
+    <title>Notes.js</title>
+  </head>
+
+  <body>
+    <div class="container">
+      <!--Top bar-->
+      <header>
+        <nav
+          id="navbar"
+          class="navbar navbar-expand-lg navbar-dark bg-primary"
+          aria-label="Main Navigation"
+        >
+          <div class="container-fluid">
+            <a class="navbar-brand" href="index.html">
+              <img
+                id="brandImage"
+                src="img/favicon.ico"
+                alt="Brand"
+                width="50"
+              />
+              <code class="h3">Notes.js</code>
+            </a>
+            <button
+              class="navbar-toggler"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarSupportedContent"
+              aria-controls="navbarTogglerDemo01"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <hr class="bg-white" />
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                  <a
+                    class="nav-link btn btn-info text-white"
+                    aria-current="page"
+                    href="index.html"
+                    ><span class="h5">Home</span></a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link btn btn-info text-white" href="about.html"
+                    ><span class="h5">About</span></a
+                  >
+                </li>
+              </ul>
+              <form
+                id="navbarSearch"
+                class="d-flex"
+                role="search"
+                aria-label="Site search"
+              >
+                <input
+                  class="form-control me-2"
+                  type="search"
+                  placeholder="Search"
+                  aria-label="Search input"
+                />
+                <button class="btn btn-outline-info text-white" type="submit">
+                  Search
+                </button>
+              </form>
+            </div>
+          </div>
+        </nav>
+      </header>
+      <hr />
+
+      <!--Content-->
+      <div class="row">
+        <div class="col-9">
+          <div class="card text-center bg-warning h6 mb-0">Notes.js</div>
+          <!--Card Container-->
+          <div class="d-flex flex-wrap gap-3 mt-2" id="cardContainer"></div>
+        </div>
+        <div class="col-3">
+          <div class="card">
+            <div class="card-header bg-info h6">Login</div>
+            <div class="card-body">
+              Welcome to notes.js! Please log in to see your notes.
+              <hr />
+              <div id="account"></div>
+            </div>
+            <div class="card-footer">
+
+              <!--MODAL FOR NOTE-->
+              <div
+                class="modal fade"
+                id="noteModal"
+                tabindex="-1"
+                aria-labelledby="noteModal"
+                aria-hidden="true"
+              >
+                <div class="modal-dialog modal-lg">
+                  <div class="modal-content">
+                    <form id="noteForm">
+                      <div class="modal-header bg-primary">
+                        <textarea
+                          class="modal-title form-control text-white"
+                          id="noteTitle"
+                          contenteditable="true"
+                          placeholder="Enter title here"
+                        ></textarea>
+                        <button
+                          type="button"
+                          class="btn-close"
+                          data-bs-dismiss="modal"
+                          aria-label="Close"
+                        ></button>
+                      </div>
+                      <div class="modal-body">
+                        <div class="mb-3">
+                          <textarea
+                            class="form-control h3"
+                            id="message-text"
+                            placeholder="Enter content here"
+                          ></textarea>
+                        </div>
+                      </div>
+                    </form>
+                    <div class="modal-footer">
+                      <button
+                        type="button"
+                        class="btn btn-secondary"
+                        data-bs-dismiss="modal"
+                      >
+                        Close
+                      </button>
+                      <button
+                        type="button"
+                        id="submitNote"
+                        class="btn btn-primary"
+                      >
+                        Create Note
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <button
+                type="button"
+                id="log-out-btn"
+                class="btn btn-danger btn-sm"
+                hidden
+              >
+                Log Out
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr />
+      <footer>
+        <div class="card text-center bg-primary text-light h2">
+          &copy;2025. Noah J., Tanzim R., Gilard V., Trevor W. All rights
+          reserved
+        </div>
+      </footer>
+    </div>
+  </body>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"
+    integrity="sha512-7Pi/otdlbbCR+LnW+F7PwFcSDJOuUJB3OxtEHbg4vSMvzvJjde4Po1v4BR9Gdc9aXNUNFVUY+SK51wWT8WF0Gg=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  ></script>
+</html>
