@@ -9,7 +9,7 @@
                 body: JSON.stringify({
                     noteId,
                     title,
-                    content // change to "admin" if needed
+                    content,
                 }),
             });
 
@@ -19,7 +19,7 @@
                 return;
             }
 
-            // ✅ Parse response
+            //Parse response
             const data = await response.json();
         } catch (error) {
             alert(`Something went wrong: ${error.message}`);
@@ -93,7 +93,6 @@
                 body: JSON.stringify({
                     username: username,
                     password: password,
-                    role: "member", // change to "admin" if needed
                 }),
             });
 
@@ -138,8 +137,7 @@
         const card = document.createElement("div");
         card.className = "card mt-2 noteCard";
 
-        card.innerHTML =
-        `<div class="card-header" contenteditable="true">${title}</div>
+        card.innerHTML = `<div class="card-header" contenteditable="true">${title}</div>
             <div class="card-body">
                 <p contenteditable="true">
                     ${content}
@@ -180,11 +178,14 @@
                 </div>
     `;
         const editForm = document.querySelector(`#${noteId}`);
-        editForm.addEventListener("submit", async (noteId, title, content) => await updateNote(noteId, title, content));
+        editForm.addEventListener(
+            "submit",
+            async (noteId, title, content) => await updateNote(noteId, title, content),
+        );
         card.querySelector("#delete-note").addEventListener("click", () => {
             card.remove();
         });
-        
+
         return card;
     };
 
@@ -221,7 +222,7 @@
                 body: JSON.stringify({
                     username,
                     password,
-                    role: "member", // or "admin" if logging in as admin
+                    role: "member",
                 }),
             });
             if (!response.ok) {
@@ -289,8 +290,6 @@
         document.getElementById("message-text").value = "";
     };
 
-    // password validate
-
     const validatePassword = (password) => {
         const hasUppercase = /[A-Z]/.test(password);
         const hasLowercase = /[a-z]/.test(password);
@@ -319,7 +318,6 @@
 
         const registerForm = document.querySelector("form#registerForm");
         registerForm.addEventListener("submit", async (event) => await register(event));
-        // ✅ Logout handler
         document.getElementById("log-out-btn").addEventListener("click", logout);
         document.getElementById("submitNote").addEventListener("click", createNote);
     };

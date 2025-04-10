@@ -80,23 +80,18 @@
             .then((res) => console.log("Data inserted with ID", res.insertedId))
             .catch((err) => {
                 console.log("Could not add data ", err.message);
-                //For now, ignore duplicate entry errors, otherwise re-throw the error for the next catch
                 if (!(err.name === "BulkWriteError" && err.code === 11000)) throw err;
             });
     };
 
-    // currently only intended for updating notes, a property param could be added if necessary
     const updateOne = async (collection, id, title, content) => {
         return await collection
             .updateOne(
                 { _id: id },
                 { $set: { title: title, content: content, dateModified: new Date().toUTCString } },
             )
-            // .then((res) => console.log("Data updated with ID", res.updatedId))
-            // ^commented out because not sure if updatedId exists
             .catch((err) => {
                 console.log("Could not update data ", err.message);
-                //For now, ignore duplicate entry errors, otherwise re-throw the error for the next catch
                 if (!(err.name === "BulkWriteError" && err.code === 11000)) throw err;
             });
     };
@@ -125,7 +120,6 @@
                     Query: req.query,
                     "Status Code": res.statusCode,
                 };
-                //console.log(log)
                 util.insertOne(collection, log);
             })
             .catch((err) => console.log(`\t|Could not connect to MongoDB Server\n\t|${err}`))

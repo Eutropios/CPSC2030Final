@@ -20,20 +20,21 @@ router.get("/login", (req, res) => {
 });
 
 router.post("/login", async (req, res) => {
-    const { username, password, role } = req.body;
+    const { username, password } = req.body;
     const collection = client.db().collection("Users");
-    const user = await util.findOne(collection, { username: username, role: role });
-    if (!user) return res.status(401).send("Invalid username");
-    console.log("MERGE THESE TWO ONCE DONE");
+    const user = await util.findOne(collection, { username: username });
+    if (!user) return res.status(401).send("Invalid username or password");
     const match = await bcrypt.compare(password, user.password);
-    if (!match) return res.status(401).send("Invalid password");
+    if (!match) return res.status(401).send("Invalid username or password");
 
     req.session.user = username;
+    const role = user.role;
     req.session.role = role;
     const userId = user._id.toString();
     req.session.userId = userId;
+    console.log(role);
+    if (role === "admin") res.redirect("/admin");
     return res.status(201).json({ username: username, role: role, userId: userId });
-    // res.redirect(role === "admin" ? "/admin" : "/member");
 });
 
 router.post("/register", async (req, res) => {
@@ -46,7 +47,7 @@ router.post("/register", async (req, res) => {
         const salt = await bcrypt.genSalt(10);
         const password = await bcrypt.hash(req.body.password, salt);
         const username = req.body.username;
-        const newUser = User(username, password);
+        const newUser = User(username, password, "admin");
         await util.insertOne(collection, newUser);
         return res.status(201).json(newUser);
     } catch (err) {
