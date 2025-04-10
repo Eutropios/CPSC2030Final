@@ -48,11 +48,7 @@ const { default: test } = require("node:test");
                     `;
 
         card.querySelector(".btn-outline-danger").addEventListener("click", () => card.remove());
-
         cardColumn.appendChild(card);
-
-        // We'll have to add this to the database too afterwards
-        // Add listeners to note that modify database content for the note
     };
     module.exports = createNoteCard;
 })();

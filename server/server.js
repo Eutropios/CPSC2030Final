@@ -25,8 +25,6 @@ server.use(express.static(config.ROOT));
 server.use(express.json());
 server.use(express.urlencoded({ extended: false }));
 
-// Tanzim, I tried but I don't think I got it to work
-
 server.use(
     session({
         secret: process.env.SESSION_SECRET || "secret",
@@ -65,7 +63,6 @@ server.use(authController);
 
 // catch all middleware
 server.use((req, res, next) => {
-    //res.status(404).sendFile('404.html',{root:config.ROOT})
     res.status(404).sendFile("404.html", { root: config.ROOT });
 });
 
