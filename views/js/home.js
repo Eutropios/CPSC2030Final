@@ -1,5 +1,5 @@
 (() => {
-    const updateNote = async (noteId) => {
+    const updateNote = async (noteId, title, content) => {
         try {
             const response = await fetch("/updateNote", {
                 method: "PUT",
@@ -133,31 +133,59 @@
     };
 
     // ✅ Helper to create note cards
-    const createNoteCard = (title, content) => {
+    const createNoteCard = (noteId, title, content) => {
         const card = document.createElement("div");
         card.className = "card mt-2 noteCard";
 
-        card.innerHTML = `
-        <div class="card-header">${title}</div>
-        <div class="card-body">
-            ${content}
-            <hr />
-            <span class="coords">Location will show here if added by user</span>
-        </div>
-        <div class="card-footer">
-            <div class="btn-group" role="group">
-                <button type="button" class="btn btn-outline-primary" id="edit-note">
-                Edit
-                </button>
-                <button type="button" class="btn btn-outline-danger" id="delete-note">
-                Delete
-                </button>
+        card.innerHTML = `<div class="card-header" contenteditable="true">${title}</div>
+            <div class="card-body">
+                <p contenteditable="true">
+                    ${content}
+                </p>
+                <hr>
+                <span>Button for opening mapbox goes here</span>
             </div>
-        </div>
+
+                <div class="card-footer">
+                    <div class="btn-group" role="group">
+                        <button type="button" id="btn-${noteId}" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="${noteId}">Edit</button>
+                        <button type="button" class="btn btn-outline-success">Share</button>
+                        <button type="button" id="delete-note" class="btn btn-outline-danger">Delete</button>
+                    </div>
+                    <div class="modal fade" id="${noteId}" tabindex="-1" role="dialog" aria-labelledby="${noteId}" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">EDIT</h5>
+                                </div>
+                                <div class=modal-body: id="edit-${noteId}">
+                                    <form id="editform-${noteId}">
+                                        <div class="form-group">
+                                            <label for="update-text" class="col-form-label">New Text
+                                            <textarea name="update-text" rows="8" cols="60"></textarea>
+                                        </div>
+                                        <hr>
+                                        <div>
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</btn>
+                                            <button type="submit" value="submit" class="btn btn-success">Submit</btn>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <span>${date}</span>
+                </div>
     `;
+        const editForm = document.querySelector(`#${noteId}`);
+        editForm.addEventListener(
+            "submit",
+            async (noteId, title, content) => await updateNote(noteId, title, content),
+        );
         card.querySelector("#delete-note").addEventListener("click", () => {
             card.remove();
         });
+
         return card;
     };
 
