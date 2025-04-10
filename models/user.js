@@ -5,10 +5,10 @@ const User = (username, hashed) => {
         GUEST: "guest",
     };
     return {
-        username: username, // Plaintext
-        password: hashed, // Salted and hashed
-        role: Role.MEMBER, // note sure what this is for
-        since: new Date().toUTCString(), // registration date
+        username: username,
+        password: hashed,
+        role: Role.MEMBER,
+        since: new Date().toUTCString(),
     };
 };
 module.exports = User;
